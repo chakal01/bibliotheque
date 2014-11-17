@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Titre:
+  = @livre.titre
+%p
+  %b Auteur:
+  = @livre.auteur_id
+%p
+  %b Edition:
+  = @livre.edition_id
+%p
+  %b Genre:
+  = @livre.genre_id
+%p
+  %b Emplacement:
+  = @livre.emplacement_id
+%p
+  %b Parution:
+  = @livre.parution
+
+= link_to 'Edit', edit_livre_path(@livre)
+\|
+= link_to 'Back', livres_path

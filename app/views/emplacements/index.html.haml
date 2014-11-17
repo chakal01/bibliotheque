@@ -1,0 +1,17 @@
+%table.table.table-bordered
+  %tr
+    %th Nom
+    %th
+    %th
+    %th
+
+  - @emplacements.each do |emplacement|
+    %tr
+      %td= emplacement.nom
+      %td= link_to 'Show', emplacement
+      %td= link_to 'Edit', edit_emplacement_path(emplacement)
+      %td= link_to 'Destroy', emplacement, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'Ajouter Emplacement', new_emplacement_path

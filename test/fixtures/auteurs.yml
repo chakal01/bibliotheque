@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nom: MyText
+  photo: MyText
+  naissance: 2014-11-17 14:17:23
+  mort: 2014-11-17 14:17:23
+  nationalite: MyText
+
+two:
+  nom: MyText
+  photo: MyText
+  naissance: 2014-11-17 14:17:23
+  mort: 2014-11-17 14:17:23
+  nationalite: MyText

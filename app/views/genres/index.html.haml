@@ -1,0 +1,17 @@
+%table.table.table-bordered
+  %tr
+    %th Nom
+    %th
+    %th
+    %th
+
+  - @genres.each do |genre|
+    %tr
+      %td= genre.nom
+      %td= link_to 'Show', genre
+      %td= link_to 'Edit', edit_genre_path(genre)
+      %td= link_to 'Destroy', genre, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'Ajouter Genre', new_genre_path

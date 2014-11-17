@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  titre: MyText
+  auteur_id_id: 
+  edition_id_id: 
+  genre_id_id: 
+  emplacement_id_id: 
+  parution: 1
+
+two:
+  titre: MyText
+  auteur_id_id: 
+  edition_id_id: 
+  genre_id_id: 
+  emplacement_id_id: 
+  parution: 1

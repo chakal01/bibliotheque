@@ -1,0 +1,10 @@
+= bootstrap_form_for @auteur do |f|
+  - if @auteur.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@auteur.errors.count, "error")} prohibited this auteur from being saved:"
+      %ul
+        - @auteur.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.text_field :nom
+  = f.submit 'Save'

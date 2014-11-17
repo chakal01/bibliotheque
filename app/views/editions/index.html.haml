@@ -1,0 +1,17 @@
+%table.table.table-bordered
+  %tr
+    %th Nom
+    %th
+    %th
+    %th
+
+  - @editions.each do |edition|
+    %tr
+      %td= edition.nom
+      %td= link_to 'Show', edition
+      %td= link_to 'Edit', edit_edition_path(edition)
+      %td= link_to 'Destroy', edition, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'Ajouter Edition', new_edition_path

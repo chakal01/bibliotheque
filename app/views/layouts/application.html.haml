@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+%html
+%head
+  %title
+    Bibliotheque
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
+  = favicon_link_tag 'book.ico'
+
+  %nav.navbar.navbar-default{role: "navigation"}
+    %div.container-fluid
+      %div.navbar-header
+        %strong.navbar-brand
+          =@title
+
+      %div.pull-right.collapse.navbar-collapse#bs-example-navbar-collapse-1
+        %ul.nav.navbar-nav
+          %li
+            %a{href: livres_path}
+              Livres
+          %li
+            %a{href: auteurs_path}
+              Auteurs
+          %li
+            %a{href: genres_path}
+              Genres
+          %li
+            %a{href: editions_path}
+              Editions
+          %li
+            %a{href: emplacements_path}
+              Emplacements
+
+%body
+  = yield
+
+
+
+

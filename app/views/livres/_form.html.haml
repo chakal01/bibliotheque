@@ -1,0 +1,18 @@
+= bootstrap_form_for @livre do |f|
+  - if @livre.errors.any?
+    %div.alert.alert-danger{role: "alert"}
+      - @livre.errors.full_messages.each do |msg|
+        %li
+          %span.glyphicon.glyphicon-exclamation-sign{"aria-hidden" => "true"}
+          %span.sr-only
+            Error:
+          = msg
+          
+  = f.text_field :titre
+  = f.select :auteur, @auteurs
+  = f.select :edition, @editions
+  = f.select :genre, @genres
+  = f.select :emplacement, @emplacements
+  = f.number_field :parution
+  = f.number_field :achat
+  = f.submit 'Sauver'

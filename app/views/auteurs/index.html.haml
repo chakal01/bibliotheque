@@ -1,0 +1,17 @@
+%table.table.table-bordered
+  %tr
+    %th Nom
+    %th
+    %th
+    %th
+
+  - @auteurs.each do |auteur|
+    %tr
+      %td= auteur.nom
+      %td= link_to 'Show', auteur
+      %td= link_to 'Edit', edit_auteur_path(auteur)
+      %td= link_to 'Destroy', auteur, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'Ajouter Auteur', new_auteur_path

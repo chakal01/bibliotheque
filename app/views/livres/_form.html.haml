@@ -1,4 +1,4 @@
-= bootstrap_form_for @livre do |f|
+= bootstrap_form_for @livre, layout: :horizontal do |f|
   - if @livre.errors.any?
     %div.alert.alert-danger{role: "alert"}
       - @livre.errors.full_messages.each do |msg|
@@ -9,10 +9,11 @@
           = msg
           
   = f.text_field :titre
-  = f.select :auteur, @auteurs
-  = f.select :edition, @editions
-  = f.select :genre, @genres
-  = f.select :emplacement, @emplacements
+  -#= f.select :auteur, @auteurs, selected: @livre.auteur_id
+  = f.text_field :auteur_nom, label: "Auteur",  data: {autocomplete_source: autocomplete_auteur_nom_livres_path}
+  = f.select :edition_id, @editions, selected: @livre.edition_id
+  = f.select :genre_id, @genres, selected: @livre.genre_id
+  = f.select :emplacement_id, @emplacements, selected: @livre.emplacement_id
   = f.number_field :parution
   = f.number_field :achat
   = f.submit 'Sauver'

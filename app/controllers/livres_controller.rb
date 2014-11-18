@@ -2,15 +2,29 @@ class LivresController < ApplicationController
   before_action :set_livre, only: [:show, :edit, :update, :destroy]
   before_action :set_listes, only: [:show, :edit, :update, :destroy, :create, :new]
   before_filter :init
+  autocomplete :auteur, :nom, full: true
 
   def init
     @title = "Mes Livres"
   end
 
+  def autocomplete_auteur_nom
+    @auteurs = Auteur.order(:nom).where("LOWER(nom) like LOWER(?)", "%#{params[:term]}%")
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @auteurs.map(&:nom) }
+    end
+  end
+
   # GET /livres
   # GET /livres.json
   def index
-    @livres = Livre.all.includes(:auteur, :edition, :genre, :emplacement)
+    respond_to do |format|
+      format.html
+      format.json { render json: LivresDatatable.new(view_context) }
+    end
+    # @livres = Livre.all.includes(:auteur, :edition, :genre, :emplacement)
   end
 
   # GET /livres/1
@@ -82,6 +96,6 @@ class LivresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def livre_params
-      params.require(:livre).permit(:titre, :auteur_id, :edition_id, :genre_id, :emplacement_id, :parution)
+      params.require(:livre).permit(:titre, :auteur_nom, :auteur, :auteur_id, :edition_id, :genre_id, :emplacement_id, :parution)
     end
 end

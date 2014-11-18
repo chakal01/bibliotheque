@@ -28,6 +28,12 @@ gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'bootstrap_form'
 gem 'roo'
+gem 'jquery-ui-rails', '~> 5.0.2'
+gem 'rails4-autocomplete'
+
+gem 'jquery-datatables-rails', '~> 3.0.0'
+gem 'will_paginate'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

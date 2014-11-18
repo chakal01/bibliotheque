@@ -16,3 +16,9 @@
 //= require_tree .
 //= require jquery
 //= require bootstrap-sprockets
+//= require jquery
+//= require jquery_ujs
+//= require jquery-ui
+//= require autocomplete-rails
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap

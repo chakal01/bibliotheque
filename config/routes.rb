@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :livres
+  resources :livres do
+    get :autocomplete_auteur_nom, on: :collection
+  end
   resources :auteurs
   resources :editions
   resources :genres

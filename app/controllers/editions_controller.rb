@@ -6,6 +6,14 @@ class EditionsController < ApplicationController
     @title = "Editions"
   end
 
+  def autocomplete_edition_nom
+    @editions = Edition.order(:nom).where("LOWER(nom) like LOWER(?)", "%#{params[:term]}%")
+    respond_to do |format|
+      format.html
+      format.json { render json: @editions.map(&:nom) }
+    end
+  end
+
   # GET /editions
   # GET /editions.json
   def index

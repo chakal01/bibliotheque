@@ -6,6 +6,14 @@ class GenresController < ApplicationController
     @title = "Genres"
   end
 
+  def autocomplete_genre_nom
+    @genres = Genre.order(:nom).where("LOWER(nom) like LOWER(?)", "%#{params[:term]}%")
+    respond_to do |format|
+      format.html
+      format.json { render json: @genres.map(&:nom) }
+    end
+  end
+
   # GET /genres
   # GET /genres.json
   def index

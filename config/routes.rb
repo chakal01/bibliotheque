@@ -1,11 +1,21 @@
 Rails.application.routes.draw do
-  resources :livres do
+  resources :livres
+
+  resources :auteurs do
     get :autocomplete_auteur_nom, on: :collection
   end
-  resources :auteurs
-  resources :editions
-  resources :genres
-  resources :emplacements
+
+  resources :editions do
+    get :autocomplete_edition_nom, on: :collection
+  end
+
+  resources :genres do
+    get :autocomplete_genre_nom, on: :collection
+  end
+
+  resources :emplacements do
+    get :autocomplete_emplacement_nom, on: :collection
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

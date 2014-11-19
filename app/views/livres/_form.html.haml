@@ -1,3 +1,19 @@
+:javascript
+  $(document).ready(function(){
+    $("#livre_auteur_nom").autocomplete({
+      source: $("#livre_auteur_nom").data('autocomplete-source'),
+    });
+    $("#livre_edition_nom").autocomplete({
+      source: $("#livre_edition_nom").data('autocomplete-source'),
+    });
+    $("#livre_genre_nom").autocomplete({
+      source: $("#livre_genre_nom").data('autocomplete-source'),
+    });
+    $("#livre_emplacement_nom").autocomplete({
+      source: $("#livre_emplacement_nom").data('autocomplete-source'),
+    });
+  });
+
 = bootstrap_form_for @livre, layout: :horizontal do |f|
   - if @livre.errors.any?
     %div.alert.alert-danger{role: "alert"}
@@ -9,11 +25,18 @@
           = msg
           
   = f.text_field :titre
-  -#= f.select :auteur, @auteurs, selected: @livre.auteur_id
-  = f.text_field :auteur_nom, label: "Auteur",  data: {autocomplete_source: autocomplete_auteur_nom_livres_path}
-  = f.select :edition_id, @editions, selected: @livre.edition_id
-  = f.select :genre_id, @genres, selected: @livre.genre_id
-  = f.select :emplacement_id, @emplacements, selected: @livre.emplacement_id
+  = f.text_field :auteur_nom, label: "Auteur",  data: {autocomplete_source: autocomplete_auteur_nom_auteurs_path}
+  = f.text_field :edition_nom, label: "Edition",  data: {autocomplete_source: autocomplete_edition_nom_editions_path}
+  = f.text_field :genre_nom, label: "Genre",  data: {autocomplete_source: autocomplete_genre_nom_genres_path}
+  = f.text_field :emplacement_nom, label: "Emplacement",  data: {autocomplete_source: autocomplete_emplacement_nom_emplacements_path}
+  
+  - if @livre.couverture?
+    = f.static_control :couverture do
+      = image_tag(@livre.couverture_url, class: 'couverture') if @livre.couverture?
+    = f.file_field :couverture, label: "Modifier"
+  - else
+    = f.file_field :couverture
+    
   = f.number_field :parution
   = f.number_field :achat
-  = f.submit 'Sauver'
+  = f.submit 'Sauver', class: "btn"

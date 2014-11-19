@@ -13,13 +13,35 @@
  *= require_tree .
  *= require_self
  *= require rails_bootstrap_forms
- *= require dataTables/jquery.dataTables
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require jquery-ui
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-.form-horizontal{
+.centree{
 	width: 600px;
 	margin: auto;
+}
+
+.table-en-tete{
+	vertical-align: center;
+}
+.titre{
+	font-weight: bold;
+}
+.informations{
+	
+}
+
+.couverture{
+	margin: auto;
+  width: auto;
+  height: 100px;
+}
+
+a{
+	color: black;
+}
+a:hover{
+	color: black;
 }

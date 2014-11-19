@@ -1,5 +1,3 @@
-= render 'form'
-
-= link_to 'Show', @livre
-\|
-= link_to 'Back', livres_path
+.centree
+	= render 'form'
+	= button_to 'Retour', @livre, method: :get, class: "btn pull-right"

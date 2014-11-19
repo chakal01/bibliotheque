@@ -6,6 +6,14 @@ class AuteursController < ApplicationController
     @title = "Auteurs"
   end
 
+  def autocomplete_auteur_nom
+    @auteurs = Auteur.order(:nom).where("LOWER(nom) like LOWER(?)", "%#{params[:term]}%")
+    respond_to do |format|
+      format.html
+      format.json { render json: @auteurs.map(&:nom) }
+    end
+  end
+
   # GET /auteurs
   # GET /auteurs.json
   def index

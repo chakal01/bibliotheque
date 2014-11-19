@@ -1,30 +1,51 @@
-:javascript
-  $('#livres').dataTable({
-    sPaginationType: "full_numbers",
-    bJQueryUI: true,
-    bProcessing: true,
-    bServerSide: true,
-    sAjaxSource: $('#livres').data('source')
-  })
+.centree
 
-  $('#livres_length').hide();
-
-= link_to 'Ajouter Livre', new_livre_path
-%br
-%br
-
-%table.table.table-bordered.small#livres
-  %thead
+  %table.table-en-tete{width: "100%"}
     %tr
-      %th Titre
-      %th Auteur
-      %th Edition
-      %th Genre
-      %th Emplacement
-      %th Parution
-      %th Achat
-      %th
-  %tbody
-    
+      %td
+        = form_tag(livres_path, :method => "get", class: "navbar-form", id: "search-form") do
+          = text_field_tag :search, params[:search], class: "span2", placeholder: "Rechercher un titre"
+          %button.btn.xs{type: "submit"}
+            %span.glyphicon.glyphicon-search
+      %td
+        = button_to 'Ajouter Livre', new_livre_path, method: :get, class: "btn pull-right"
+  %br
+  %br
+
+  %table.table.small
+    - @livres.each do |livre|
+      %tr
+        %td
+          %a{href: livre_path(livre)}
+            = image_tag((livre.couverture.blank? ? 'no_image.png' : livre.couverture_url), class: 'couverture')
+        %td
+          %a.titre{href: livre_path(livre)}
+            = livre.titre
+          .informations
+            - if livre.auteur
+              %a{href: auteur_path(livre.auteur)}
+                = livre.auteur.nom
+            %br
+            - if livre.edition
+              %a{href: edition_path(livre.edition)}
+                = livre.edition.nom
+            %br
+            - if livre.genre
+              %a{href: genre_path(livre.genre)}
+                = livre.genre.nom
+            %br
+            = livre.parution
+            %br
+            
+    - if @livres.empty?
+      %tr
+        %td
+          .titre
+            - if params[:search]
+              Aucun livre ne correspond à la recherche.
+            - else
+              Aucun livre.
+  .pull-right
+    = will_paginate @livres, :renderer => BootstrapPagination::Rails
 
 

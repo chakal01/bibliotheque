@@ -1,0 +1,28 @@
+%table.table.table-bordered.small#livres_listing
+  %thead
+    %tr
+      %th Titre
+      %th Auteur
+      %th Edition
+      %th Genre
+      %th Emplacement
+      %th Parution
+      %th Achat
+      %th
+  %tbody
+    - @livres.each do |livre|
+      %tr
+        %td= livre.titre
+        %td= livre.auteur.nom if livre.auteur
+        %td= livre.edition.nom if livre.edition
+        %td= livre.genre.nom if livre.genre
+        %td= livre.emplacement.nom if livre.emplacement
+        %td= livre.parution
+        %td= livre.achat==0 ? nil : livre.achat
+        %td
+          %button.btn.btn-default.btn-xs{type: "button"}
+            %a{href: edit_livre_path(livre)}
+              %span.glyphicon.glyphicon-pencil
+          %button.btn.btn-default.btn-xs{type: "button"}
+            %a{href: livre_path(livre), "data-method" => :delete, "data-confirm" => "Are you sure?"}
+              %span.glyphicon.glyphicon-trash

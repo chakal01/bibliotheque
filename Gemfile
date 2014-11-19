@@ -8,11 +8,6 @@ gem 'rails', '4.1.6.rc1'
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer',  platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -28,11 +23,16 @@ gem 'pg'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'bootstrap_form'
 gem 'roo'
-gem 'jquery-ui-rails', '~> 5.0.2'
-gem 'rails4-autocomplete'
 
-gem 'jquery-datatables-rails', '~> 3.0.0'
+gem 'jquery-ui-rails'
+gem 'rails4-autocomplete'
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+
+# gestion d'images de couvertures de livre
+gem 'carrierwave'
+# gem 'rmagick', '~> 2.13.3'  #imagemagik issue...
+# gem install rmagick --platform=ruby -- --with-opt-lib=C:\Ruby200-x64\ImageMagick-6.9.0-Q16\lib --with-opt-include=C:\Ruby200-x64\ImageMagick-6.9.0-Q16\include --with-opt-dir=C:\Ruby200-x64\ImageMagick-6.9.0-Q16
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

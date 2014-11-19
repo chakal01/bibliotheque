@@ -1,24 +1,44 @@
-%p#notice= notice
+%table.centree
+  %tr
+    %td
+      = image_tag((@livre.couverture.blank? ? 'no_image.png' : @livre.couverture_url), class: 'couverture')
+      %br
+      %br
+    %td
+      %a.titre
+        = @livre.titre
+      .informations
+        - if @livre.auteur
+          %a{href: auteur_path(@livre.auteur)}
+            = @livre.auteur.nom
+        %br
+        - if @livre.edition
+          %a{href: edition_path(@livre.edition)}
+            = @livre.edition.nom
+        %br
+        - if @livre.genre
+          %a{href: genre_path(@livre.genre)}
+            = @livre.genre.nom
+        %br
+        = @livre.parution
+        %br
+        
+  - if @livre.achat && @livre.achat != 0    
+    %tr
+      %td{colspan: 2}
+        Acheté en 
+        = @livre.achat
+      %br
 
-%p
-  %b Titre:
-  = @livre.titre
-%p
-  %b Auteur:
-  = @livre.auteur_id
-%p
-  %b Edition:
-  = @livre.edition_id
-%p
-  %b Genre:
-  = @livre.genre_id
-%p
-  %b Emplacement:
-  = @livre.emplacement_id
-%p
-  %b Parution:
-  = @livre.parution
-
-= link_to 'Edit', edit_livre_path(@livre)
-\|
-= link_to 'Back', livres_path
+  - if @livre.emplacement     
+    %br
+    %tr
+      %td{colspan: 2}
+        Emplacement :
+        %a{href: emplacement_path(@livre.emplacement)}
+          = @livre.emplacement.nom
+        %br
+  %tr
+    %td{colspan: 2}
+      = button_to 'Retour', livres_path, method: :get, class: "btn pull-right", style: "margin-left: 30px;"
+      = button_to 'Modifier', edit_livre_path(@livre), method: :get, class: "btn pull-right"

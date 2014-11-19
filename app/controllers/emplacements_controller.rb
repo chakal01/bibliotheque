@@ -6,6 +6,14 @@ class EmplacementsController < ApplicationController
     @title = "Emplacements"
   end
   
+  def autocomplete_emplacement_nom
+    @emplacements = Emplacement.order(:nom).where("LOWER(nom) like LOWER(?)", "%#{params[:term]}%")
+    respond_to do |format|
+      format.html
+      format.json { render json: @emplacements.map(&:nom) }
+    end
+  end
+
   # GET /emplacements
   # GET /emplacements.json
   def index

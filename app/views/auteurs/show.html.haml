@@ -1,7 +1,10 @@
 %table.centree
   %tr
     %td
-      = image_tag((@auteur.photo.blank? ? 'no_avatar.jpeg' : @auteur.photo_url), class: 'couverture')
+      - if @auteur.photo.blank?
+        = link_to image_tag('no_avatar.jpeg', class: 'couverture'), avatar_auteur_path(@auteur)
+      - else
+        = image_tag(@auteur.photo_url, class: 'couverture')
       %br
       %br
     %td
@@ -17,6 +20,7 @@
   %tr
     %td{colspan: 2}
       = button_to 'Listes des Auteurs', auteurs_path, method: :get, class: "btn pull-right", style: "margin-left: 30px;"
+      = button_to 'Supprimer', auteur_path(@auteur), method: :delete, class: "btn pull-right", style: "margin-left: 30px;", data: {confirm: 'Are you sure?' }
       = button_to 'Modifier', edit_auteur_path(@auteur), method: :get, class: "btn pull-right"
 
   %tr
@@ -39,8 +43,7 @@
               = livre.edition.nom
           %br
           - if livre.genre
-            %a{href: genre_path(livre.genre)}
-              = livre.genre.nom
+            = livre.genre.nom
           %br
           = livre.parution
           %br

@@ -8,7 +8,8 @@
           %button.btn.xs{type: "submit"}
             %span.glyphicon.glyphicon-search
       %td
-        = button_to 'Ajouter Auteur', new_auteur_path, method: :get, class: "btn pull-right"
+        = button_to "Fusionner des Auteurs", fusion_auteurs_path, method: :get, class: "btn pull-right", style: "margin-left:10px"
+        = button_to 'Ajouter un Auteur', new_auteur_path, method: :get, class: "btn pull-right"
   %br
   %br
 
@@ -24,7 +25,7 @@
           = auteur.nom
         .informations
           = auteur.naissance
-          \-
+          = auteur.naissance.present? ? "-" : ""
           = auteur.mort
           %br
           = auteur.nationalite

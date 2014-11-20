@@ -68,14 +68,11 @@ class GenresController < ApplicationController
   end
 
   def choix_fusion
-    puts "genre_fusion"
     liste = params["/genres/fusion"].select{|id,bool| bool=="1"}.map{|id,bool| id}
     @genres = Genre.find(liste)
   end
 
   def fusionner
-    puts "fusionner ici"
-    puts params
     id_to_keep = params["/genres/fusionner"]["master"]
     params["/genres/fusionner"]["ids"].keys.each do |id|
       Livre.where(genre_id: id).each do |livre|

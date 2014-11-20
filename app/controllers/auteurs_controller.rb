@@ -1,6 +1,7 @@
 class AuteursController < ApplicationController
-  before_action :set_auteur, only: [:show, :edit, :update, :destroy]
+  before_action :set_auteur, only: [:show, :edit, :update, :destroy, :avatar, :save_avatar]
   before_filter :init
+  # include Google
 
   def init
     @title = "Auteurs"
@@ -49,7 +50,7 @@ class AuteursController < ApplicationController
     end
     respond_to do |format|
       if @auteur.save
-        format.html { redirect_to @auteur, notice: 'Auteur was successfully created.' }
+        format.html { redirect_to @auteur, notice: "Auteur #{@auteur.nom} créé." }
         format.json { render :show, status: :created, location: @auteur }
       else
         format.html { render :new }
@@ -63,7 +64,7 @@ class AuteursController < ApplicationController
   def update
     respond_to do |format|
       if @auteur.update(auteur_params)
-        format.html { redirect_to @auteur, notice: 'Auteur was successfully updated.' }
+        format.html { redirect_to @auteur, notice: "Auteur #{@auteur.nom} mis à jour." }
         format.json { render :show, status: :ok, location: @auteur }
       else
         format.html { render :edit }
@@ -75,14 +76,81 @@ class AuteursController < ApplicationController
   # DELETE /auteurs/1
   # DELETE /auteurs/1.json
   def destroy
-    @auteur.destroy
+    @auteur.livres.each do |livre|
+      livre.auteur_id = nil
+      livre.save
+    end
+    @auteur.delete
     respond_to do |format|
-      format.html { redirect_to auteurs_url, notice: 'Auteur was successfully destroyed.' }
+      format.html { redirect_to auteurs_url, notice: "Auteur #{@auteur.nom} détruit. Donc #{@auteur.livres.count} livres sont non assignés." }
       format.json { head :no_content }
     end
   end
 
+  def fusion
+    if params[:search]
+      @auteurs = Auteur.where("LOWER(nom) like LOWER(?)", "%#{params[:search]}%")
+    else
+      @auteurs = Auteur.all
+    end
+    @auteurs = @auteurs.order(:nom)
+  end
+
+  def choix_fusion
+    liste = params["/auteurs/fusion"].select{|id,bool| bool=="1"}.map{|id,bool| id}
+    @auteurs = Auteur.find(liste)
+  end
+
+  def fusionner
+    id_to_keep = params["/auteurs/fusionner"]["master"]
+    params["/auteurs/fusionner"]["ids"].keys.each do |id|
+      Livre.where(auteur_id: id).each do |livre|
+        livre.auteur_id = id_to_keep
+        livre.save
+      end
+      Auteur.find(id).destroy if id != id_to_keep
+    end
+    redirect_to auteurs_url, notice: "Fusion effectuée."
+  end
+
+  def avatar
+    @uris = []
+    Google::Search::Image.new(:query => @auteur.nom).first(8).each do |image|
+      @uris.push(image.uri)
+    end
+  end
+
+  def save_avatar
+    filename_image_down = download_image_from_url(params["/auteurs/#{@auteur.id}/avatar"]["uri"])
+    File.open(filename_image_down, 'r') do |photo|
+      @auteur.update(photo: photo)
+      uploader = ImageUploader.new
+      uploader.store!(@auteur.photo)
+      @auteur.save
+    end
+    File.delete(filename_image_down) if File.exist?(filename_image_down)
+    redirect_to auteurs_url
+  end
+
   private
+
+    def download_image_from_url(url)
+      uri  = URI.parse(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = url.include?('https')
+
+      response = http.request(
+        Net::HTTP::Get.new(uri.request_uri, {
+          'User-Agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'
+        })
+      )
+      path = "tmp/images"
+      random_token = Digest::SHA2.hexdigest("#{Time.now.utc}").first(10)
+      name = "#{random_token}.png"
+      File.open(File.join(path, name), 'wb') { |f| f.write(response.body) }
+      "#{path}/#{name}"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_auteur
       @auteur = Auteur.find(params[:id])

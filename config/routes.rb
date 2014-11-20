@@ -3,6 +3,13 @@ Rails.application.routes.draw do
 
   resources :auteurs do
     get :autocomplete_auteur_nom, on: :collection
+    get :fusion, on: :collection
+    post :fusion, on: :collection, to: :choix_fusion
+    post :fusionner, on: :collection
+    member do
+      get :avatar
+      post :avatar, to: :save_avatar
+    end
   end
 
   resources :editions do

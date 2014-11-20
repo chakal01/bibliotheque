@@ -1,0 +1,21 @@
+
+%table.table.centree
+  %tr
+    %td{colspan: 2}
+      = form_tag(fusion_auteurs_path, method: :get, class: "navbar-form", id: "search-form") do
+        = text_field_tag :search, params[:search], class: "span2", placeholder: "Rechercher un auteur"
+        %button.btn.xs{type: "submit"}
+          %span.glyphicon.glyphicon-search
+  %tr
+    %td{colspan: 2}
+      Choisir les auteurs à fusionner :
+  = bootstrap_form_for(fusion_auteurs_path) do |f|
+    - @auteurs.each_with_index do |auteur, index|
+      -if index % 2 == 0
+        %tr
+      %td
+        = f.check_box auteur.id, label: auteur.nom, id: "fusionner[#{auteur.id}]"
+    %tr
+      %td{colspan: 2}
+        = f.submit "Valider", class: "btn"
+      

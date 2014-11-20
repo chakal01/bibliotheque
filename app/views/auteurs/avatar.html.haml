@@ -1,0 +1,16 @@
+= bootstrap_form_for avatar_auteur_path(@auteur) do |f|
+  %table.table.centree
+    %tr
+      %td{colspan: 2}
+        Choisir un avatar pour 
+        = @auteur.nom
+    - @uris.each_with_index do |uri, index|
+      - if index%2==0
+        %tr
+      %td
+        = f.radio_button :uri, uri, label: "", checked: index==0
+        = image_tag(uri, class: 'couverture')
+    %tr
+      %td{colspan: 2}
+        = f.submit "Valider", class: "btn"
+   

@@ -1,0 +1,26 @@
+= bootstrap_form_for fusionner_auteurs_path, url: fusionner_auteurs_path do |f|
+  %table.table.centree
+    %tr
+      %td{colspan: 3}
+        Choisir l'auteur à conserver
+    - @auteurs.each_with_index do |auteur, index|
+      %tr
+        %td
+          = f.radio_button :master, auteur.id, label: "", checked: index==0
+          = f.hidden_field "ids[#{auteur.id}]"
+        %td
+          %a{href: auteur_path(auteur)}
+            = image_tag((auteur.photo.blank? ? 'no_avatar.jpeg' : auteur.photo_url), class: 'couverture')
+        %td
+          %a.titre{href: auteur_path(auteur)}
+            = auteur.nom
+          .informations
+            = auteur.naissance
+            \-
+            = auteur.mort
+            %br
+            = auteur.nationalite
+    %tr
+      %td{colspan: 3}
+        = f.submit "Valider", class: "btn"
+      

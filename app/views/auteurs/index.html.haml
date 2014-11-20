@@ -1,17 +1,32 @@
-%table.table.table-bordered
-  %tr
-    %th Nom
-    %th
-    %th
-    %th
+.centree
 
-  - @auteurs.each do |auteur|
+  %table.table-en-tete{width: "100%"}
     %tr
-      %td= auteur.nom
-      %td= link_to 'Show', auteur
-      %td= link_to 'Edit', edit_auteur_path(auteur)
-      %td= link_to 'Destroy', auteur, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td
+        = form_tag(auteurs_path, :method => "get", class: "navbar-form", id: "search-form") do
+          = text_field_tag :search, params[:search], class: "span2", placeholder: "Rechercher un auteur"
+          %button.btn.xs{type: "submit"}
+            %span.glyphicon.glyphicon-search
+      %td
+        = button_to 'Ajouter Auteur', new_auteur_path, method: :get, class: "btn pull-right"
+  %br
+  %br
 
-%br
-
-= link_to 'Ajouter Auteur', new_auteur_path
+  %table.table.small
+    - @auteurs.each_with_index do |auteur, index|
+      - if index%2==0
+        %tr
+      %td
+        %a{href: auteur_path(auteur)}
+          = image_tag((auteur.photo.blank? ? 'no_avatar.jpeg' : auteur.photo_url), class: 'couverture')
+      %td
+        %a.titre{href: auteur_path(auteur)}
+          = auteur.nom
+        .informations
+          = auteur.naissance
+          \-
+          = auteur.mort
+          %br
+          = auteur.nationalite
+  .pull-right
+    = will_paginate @livres, :renderer => BootstrapPagination::Rails

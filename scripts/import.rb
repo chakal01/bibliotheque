@@ -9,20 +9,9 @@ s = Roo::Excelx.new("./scripts/books.xlsx")
 	s_parution = s.cell(ligne,5)
 	s_achat = s.cell(ligne,6)
 
-	auteur = Auteur.find_by(nom: s_auteur)
-	genre = Genre.find_by(nom: s_genre)
-	edition = Edition.find_by(nom: edition)
-
-	if !auteur
-		auteur = Auteur.create(nom: s_auteur)
-	end
-	if !genre
-		genre = Genre.create(nom: s_genre)
-	end
-	if !edition
-		edition=  Edition.create(nom: s_edition)
-	end
-
+	auteur = Auteur.find_or_create_by(nom: s_auteur)
+	genre = Genre.find_or_create_by(nom: s_genre)
+	edition = Edition.find_or_create_by(nom: s_edition)
 
 	livre = Livre.create(titre: s_titre, 
 								auteur_id: (auteur ? auteur.id : nil), 

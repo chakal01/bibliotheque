@@ -1,17 +1,24 @@
-%table.table.table-bordered
+%table.table-en-tete.centree{width: "100%"}
   %tr
-    %th Nom
-    %th
-    %th
-    %th
+    %td
+      = button_to "Fusionner des genres", fusion_genres_path, method: :get, class: "btn pull-right"
+      %br
+      %br
 
+%table.table.centree
+  = bootstrap_form_for @genre do |f|
+    %tr
+      %td
+        = f.text_field :nom, hide_label: :true
+      %td
+        %button.btn.xs
+          %span.glyphicon.glyphicon-plus
   - @genres.each do |genre|
     %tr
       %td= genre.nom
-      %td= link_to 'Show', genre
-      %td= link_to 'Edit', edit_genre_path(genre)
-      %td= link_to 'Destroy', genre, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+      %td
+        = button_to edit_genre_path(genre), method: :get, class: "btn pull-left" do
+          .glyphicon.glyphicon-pencil
+        = button_to genre, method: :delete, class: "btn pull-left", style: "margin-left: 10px;", :data => { :confirm => 'Are you sure?' } do
+          .glyphicon.glyphicon-trash
 %br
-
-= link_to 'Ajouter Genre', new_genre_path

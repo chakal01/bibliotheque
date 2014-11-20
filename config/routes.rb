@@ -9,8 +9,12 @@ Rails.application.routes.draw do
     get :autocomplete_edition_nom, on: :collection
   end
 
+
   resources :genres do
     get :autocomplete_genre_nom, on: :collection
+    get :fusion, on: :collection
+    post :fusion, on: :collection, to: :choix_fusion
+    post :fusionner, on: :collection
   end
 
   resources :emplacements do

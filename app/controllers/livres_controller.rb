@@ -15,13 +15,13 @@ class LivresController < ApplicationController
   # GET /livres
   # GET /livres.json
   def index
-     if params[:search]
+    if params[:search]
       @livres = Livre.where("LOWER(titre) like LOWER(?)", "%#{params[:search]}%")
     else
       @livres = Livre.all
     end
 
-    @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: params[:page], per_page: 10)
+    @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: params[:page], per_page: 18)
   end
 
   # GET /livres/1
@@ -43,7 +43,7 @@ class LivresController < ApplicationController
   def create
     @livre = Livre.new(livre_params)
     if @livre.couverture
-      uploader = CouvertureUploader.new
+      uploader = ImageUploader.new
       uploader.store!(@livre.couverture)
     end
 
@@ -87,7 +87,7 @@ class LivresController < ApplicationController
     def set_livre
       @livre = Livre.find(params[:id])
       if @livre.couverture
-        uploader = CouvertureUploader.new
+        uploader = ImageUploader.new
         uploader.retrieve_from_store!(@livre.couverture)
       end
     end

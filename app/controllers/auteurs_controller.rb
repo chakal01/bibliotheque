@@ -17,7 +17,12 @@ class AuteursController < ApplicationController
   # GET /auteurs
   # GET /auteurs.json
   def index
-    @auteurs = Auteur.all
+    if params[:search]
+      @auteurs = Auteur.where("LOWER(nom) like LOWER(?)", "%#{params[:search]}%")
+    else
+      @auteurs = Auteur.all
+    end
+    @auteurs = @auteurs.order(:nom).paginate( page: params[:page], per_page: 18)
   end
 
   # GET /auteurs/1
@@ -38,7 +43,10 @@ class AuteursController < ApplicationController
   # POST /auteurs.json
   def create
     @auteur = Auteur.new(auteur_params)
-
+    if @auteur.photo
+      uploader = ImageUploader.new
+      uploader.store!(@auteur.photo)
+    end
     respond_to do |format|
       if @auteur.save
         format.html { redirect_to @auteur, notice: 'Auteur was successfully created.' }
@@ -78,10 +86,14 @@ class AuteursController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_auteur
       @auteur = Auteur.find(params[:id])
+      if @auteur.photo
+        uploader = ImageUploader.new
+        uploader.retrieve_from_store!(@auteur.photo)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def auteur_params
-      params.require(:auteur).permit(:nom)
+      params.require(:auteur).permit(:nom, :photo, :nationalite, :naissance, :mort)
     end
 end

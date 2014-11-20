@@ -1,4 +1,4 @@
-= bootstrap_form_for @auteur do |f|
+= bootstrap_form_for @auteur, layout: :horizontal do |f|
   - if @auteur.errors.any?
     #error_explanation
       %h2= "#{pluralize(@auteur.errors.count, "error")} prohibited this auteur from being saved:"
@@ -7,4 +7,16 @@
           %li= msg
 
   = f.text_field :nom
-  = f.submit 'Save'
+  - if @auteur.photo?
+    = f.static_control :photo do
+      = image_tag(@auteur.photo_url, class: 'couverture') if @auteur.photo?
+    = f.file_field :photo, label: "Modifier"
+  - else
+    = f.file_field :photo
+
+  = f.text_field :nationalite
+  = f.number_field :naissance
+  = f.number_field :mort
+  = f.submit 'Sauver', class: "btn"
+  %button.btn.pull-right{onclick: 'window.location.href="/auteurs";return false;'}
+    Retour

@@ -1,0 +1,15 @@
+= bootstrap_form_for fusionner_genres_path, url: fusionner_genres_path do |f|
+  %table.table.centree
+    %tr
+      %td
+        Choisir le genre à conserver
+    - @genres.each_with_index do |genre, index|
+      -if index % 2 == 0
+        %tr
+      %td
+        = f.radio_button :master, genre.id, label: genre.nom, checked: index==0
+        = f.hidden_field "ids[#{genre.id}]"
+    %tr
+      %td
+        = f.submit "Valider"
+      

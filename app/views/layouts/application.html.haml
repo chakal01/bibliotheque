@@ -34,6 +34,15 @@
               Emplacements
 
 %body
+  .centree
+    - if flash[:error]
+      .alert.alert-danger{role: "alert"}
+        %span.glyphicon.glyphicon-exclamation-sign{"aria-hidden" => "true"}
+        =flash[:error]
+    - if flash[:notice]
+      .alert.alert-success{role: "alert"}
+        =flash[:notice]
+
   = yield
 
 

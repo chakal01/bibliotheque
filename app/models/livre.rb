@@ -4,7 +4,7 @@ class Livre < ActiveRecord::Base
   belongs_to :genre
   belongs_to :emplacement
   validates :titre, presence: true
-  mount_uploader :couverture, CouvertureUploader
+  mount_uploader :couverture, ImageUploader
 
   def auteur_nom
     auteur.nom if auteur

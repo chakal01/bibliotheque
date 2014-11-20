@@ -17,12 +17,8 @@ class GenresController < ApplicationController
   # GET /genres
   # GET /genres.json
   def index
-    @genres = Genre.all
-  end
-
-  # GET /genres/1
-  # GET /genres/1.json
-  def show
+    @genres = Genre.order(id: :asc)
+    @genre = Genre.new
   end
 
   # GET /genres/new
@@ -38,30 +34,23 @@ class GenresController < ApplicationController
   # POST /genres.json
   def create
     @genre = Genre.new(genre_params)
-
-    respond_to do |format|
-      if @genre.save
-        format.html { redirect_to @genre, notice: 'Genre was successfully created.' }
-        format.json { render :show, status: :created, location: @genre }
-      else
-        format.html { render :new }
-        format.json { render json: @genre.errors, status: :unprocessable_entity }
-      end
+    if @genre.nom.present? && @genre.save
+      flash[:notice] = "Genre \"#{@genre.nom}\" créé."
+    else
+      flash[:error] = "Genre \"#{@genre.nom}\" existe déjà."
     end
+    redirect_to genres_path
   end
 
   # PATCH/PUT /genres/1
   # PATCH/PUT /genres/1.json
   def update
-    respond_to do |format|
-      if @genre.update(genre_params)
-        format.html { redirect_to @genre, notice: 'Genre was successfully updated.' }
-        format.json { render :show, status: :ok, location: @genre }
-      else
-        format.html { render :edit }
-        format.json { render json: @genre.errors, status: :unprocessable_entity }
-      end
+    if @genre.nom.present? && @genre.update(genre_params)
+      flash[:notice] = "Genre \"#{@genre.nom}\" modifié."
+    else
+      flash[:error] = "Genre \"#{@genre.nom}\" existe déjà."
     end
+    redirect_to genres_path
   end
 
   # DELETE /genres/1
@@ -69,10 +58,35 @@ class GenresController < ApplicationController
   def destroy
     @genre.destroy
     respond_to do |format|
-      format.html { redirect_to genres_url, notice: 'Genre was successfully destroyed.' }
+      format.html { redirect_to genres_url, notice: "Genre \"#{@genre.nom}\" a bien été supprimé." }
       format.json { head :no_content }
     end
   end
+
+  def fusion
+    @genres = Genre.order(:nom)
+  end
+
+  def choix_fusion
+    puts "genre_fusion"
+    liste = params["/genres/fusion"].select{|id,bool| bool=="1"}.map{|id,bool| id}
+    @genres = Genre.find(liste)
+  end
+
+  def fusionner
+    puts "fusionner ici"
+    puts params
+    id_to_keep = params["/genres/fusionner"]["master"]
+    params["/genres/fusionner"]["ids"].keys.each do |id|
+      Livre.where(genre_id: id).each do |livre|
+        livre.genre_id = id_to_keep
+        livre.save
+      end
+      Genre.find(id).destroy if id != id_to_keep
+    end
+    redirect_to genres_url, notice: "Fusion effectuée."
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -82,6 +96,7 @@ class GenresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def genre_params
-      params[:genre]
+      params.require(:genre).permit(:nom)
     end
+
 end

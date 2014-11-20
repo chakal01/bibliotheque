@@ -13,30 +13,33 @@
   %br
 
   %table.table.small
-    - @livres.each do |livre|
-      %tr
-        %td
-          %a{href: livre_path(livre)}
-            = image_tag((livre.couverture.blank? ? 'no_image.png' : livre.couverture_url), class: 'couverture')
-        %td
-          %a.titre{href: livre_path(livre)}
-            = livre.titre
-          .informations
-            - if livre.auteur
-              %a{href: auteur_path(livre.auteur)}
-                = livre.auteur.nom
-            %br
-            - if livre.edition
-              %a{href: edition_path(livre.edition)}
-                = livre.edition.nom
-            %br
-            - if livre.genre
-              %a{href: genre_path(livre.genre)}
-                = livre.genre.nom
-            %br
-            = livre.parution
-            %br
-            
+    - @livres.each_with_index do |livre, index|
+      - if index%2==0
+        %tr
+      %td
+        %a{href: livre_path(livre)}
+          = image_tag((livre.couverture.blank? ? 'no_image.png' : livre.couverture_url), class: 'couverture')
+      %td
+        %a.titre{href: livre_path(livre)}
+          = livre.titre
+        .informations
+          - if livre.auteur
+            %a{href: auteur_path(livre.auteur)}
+              = livre.auteur.nom
+          %br
+          - if livre.edition
+            %a{href: edition_path(livre.edition)}
+              = livre.edition.nom
+          %br
+          - if livre.genre
+            %a{href: genre_path(livre.genre)}
+              = livre.genre.nom
+          %br
+          = livre.parution
+          %br
+      
+
+
     - if @livres.empty?
       %tr
         %td

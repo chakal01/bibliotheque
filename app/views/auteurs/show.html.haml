@@ -1,6 +1,53 @@
-%p#notice= notice
+%table.centree
+  %tr
+    %td
+      = image_tag((@auteur.photo.blank? ? 'no_avatar.jpeg' : @auteur.photo_url), class: 'couverture')
+      %br
+      %br
+    %td
+      %a.titre
+        = @auteur.nom
+      .informations
+        = @auteur.naissance
+        \-
+        = @auteur.mort
+        %br
+        = @auteur.nationalite
+        
+  %tr
+    %td{colspan: 2}
+      = button_to 'Listes des Auteurs', auteurs_path, method: :get, class: "btn pull-right", style: "margin-left: 30px;"
+      = button_to 'Modifier', edit_auteur_path(@auteur), method: :get, class: "btn pull-right"
 
-
-= link_to 'Edit', edit_auteur_path(@auteur)
-\|
-= link_to 'Back', auteurs_path
+  %tr
+    %td
+      %br
+      Liste de ses ouvrages :
+%br
+%table.table.centree
+  - @auteur.livres.each do |livre|
+    %tr
+      %td
+        %a{href: livre_path(livre)}
+          = image_tag((livre.couverture.blank? ? 'no_image.png' : livre.couverture_url), class: 'couverture')
+      %td
+        %a.titre{href: livre_path(livre)}
+          = livre.titre
+        .informations
+          - if livre.edition
+            %a{href: edition_path(livre.edition)}
+              = livre.edition.nom
+          %br
+          - if livre.genre
+            %a{href: genre_path(livre.genre)}
+              = livre.genre.nom
+          %br
+          = livre.parution
+          %br
+          
+  - if @auteur.livres.empty?
+    %tr
+      %td{colspan: 2}
+        Aucun livre.
+%br
+%br

@@ -34,6 +34,8 @@ gem 'carrierwave'
 # gem 'rmagick', '~> 2.13.3'  #imagemagik issue...
 # gem install rmagick --platform=ruby -- --with-opt-lib=C:\Ruby200-x64\ImageMagick-6.9.0-Q16\lib --with-opt-include=C:\Ruby200-x64\ImageMagick-6.9.0-Q16\include --with-opt-dir=C:\Ruby200-x64\ImageMagick-6.9.0-Q16
 
+gem 'google-search', '~> 1.0.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

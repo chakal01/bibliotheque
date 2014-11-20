@@ -1,0 +1,14 @@
+= bootstrap_form_for(fusion_genres_path) do |f|
+  %table.table.centree
+    %tr
+      %td{colspan: 2}
+        Choisir les genres à fusionner
+    - @genres.each_with_index do |genre, index|
+      -if index % 2 == 0
+        %tr
+      %td
+        = f.check_box genre.id, label: genre.nom, id: "fusionner[#{genre.id}]"
+    %tr
+      %td{colspan: 2}
+        = f.submit "Valider"
+      

@@ -1,4 +1,4 @@
-= bootstrap_form_for @genre do |f|
+= bootstrap_form_for @genre, layout: :horizontal do |f|
   - if @genre.errors.any?
     #error_explanation
       %h2= "#{pluralize(@genre.errors.count, "error")} prohibited this genre from being saved:"
@@ -7,4 +7,4 @@
           %li= msg
 
   = f.text_field :nom
-  = f.submit 'Save'
+  = f.submit 'Save', class: "btn"

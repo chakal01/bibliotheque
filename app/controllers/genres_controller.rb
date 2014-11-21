@@ -17,7 +17,7 @@ class GenresController < ApplicationController
   # GET /genres
   # GET /genres.json
   def index
-    @genres = Genre.order(id: :asc)
+    @genres = Genre.order(:nom)
     @genre = Genre.new
   end
 
@@ -67,19 +67,18 @@ class GenresController < ApplicationController
     @genres = Genre.order(:nom)
   end
 
-  def choix_fusion
-    liste = params["/genres/fusion"].select{|id,bool| bool=="1"}.map{|id,bool| id}
-    @genres = Genre.find(liste)
-  end
-
   def fusionner
-    id_to_keep = params["/genres/fusionner"]["master"]
-    params["/genres/fusionner"]["ids"].keys.each do |id|
-      Livre.where(genre_id: id).each do |livre|
-        livre.genre_id = id_to_keep
-        livre.save
-      end
-      Genre.find(id).destroy if id != id_to_keep
+    liste = params["/genres/fusion"].select{|id,bool| bool=="1"}.map{|id,bool| id}
+    genres = Genre.find(liste)
+    id_to_keep = genres.first.id
+    genres.each do |genre|
+      if genre.id != id_to_keep
+        Livre.where(genre_id: genre.id).each do |livre|
+          livre.genre_id = id_to_keep
+          livre.save
+        end
+        genre.destroy
+      end 
     end
     redirect_to genres_url, notice: "Fusion effectuée."
   end

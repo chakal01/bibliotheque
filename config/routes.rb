@@ -14,14 +14,15 @@ Rails.application.routes.draw do
 
   resources :editions do
     get :autocomplete_edition_nom, on: :collection
+    get :fusion, on: :collection
+    post :fusion, on: :collection, to: :fusionner
   end
 
 
   resources :genres do
     get :autocomplete_genre_nom, on: :collection
     get :fusion, on: :collection
-    post :fusion, on: :collection, to: :choix_fusion
-    post :fusionner, on: :collection
+    post :fusion, on: :collection, to: :fusionner
   end
 
   resources :emplacements do

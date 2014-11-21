@@ -1,3 +1,4 @@
 class Edition < ActiveRecord::Base
-	validates :nom, presence: true
+	has_many :livres
+	validates :nom, presence: true, uniqueness: true
 end

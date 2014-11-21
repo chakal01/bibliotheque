@@ -17,12 +17,15 @@ class EditionsController < ApplicationController
   # GET /editions
   # GET /editions.json
   def index
-    @editions = Edition.all
+    @editions = Edition.order(:nom)
+    @edition = Edition.new
   end
 
   # GET /editions/1
   # GET /editions/1.json
   def show
+    @liste_by_auteur = @edition.livres.includes(:auteur).group_by{|livre| livre.auteur.nom}
+    puts "#{@liste_by_auteur}"
   end
 
   # GET /editions/new
@@ -38,40 +41,54 @@ class EditionsController < ApplicationController
   # POST /editions.json
   def create
     @edition = Edition.new(edition_params)
-
-    respond_to do |format|
-      if @edition.save
-        format.html { redirect_to @edition, notice: 'Edition was successfully created.' }
-        format.json { render :show, status: :created, location: @edition }
-      else
-        format.html { render :new }
-        format.json { render json: @edition.errors, status: :unprocessable_entity }
-      end
+    if @edition.nom.present? && @edition.save
+      flash[:notice] = "Edition \"#{@edition.nom}\" créé."
+    else
+      flash[:error] = @edition.errors.full_messages.join(',')
     end
+    redirect_to editions_path
   end
 
   # PATCH/PUT /editions/1
   # PATCH/PUT /editions/1.json
   def update
-    respond_to do |format|
-      if @edition.update(edition_params)
-        format.html { redirect_to @edition, notice: 'Edition was successfully updated.' }
-        format.json { render :show, status: :ok, location: @edition }
-      else
-        format.html { render :edit }
-        format.json { render json: @edition.errors, status: :unprocessable_entity }
-      end
+    if @edition.nom.present? && @edition.update(edition_params)
+      flash[:notice] = "Edition \"#{@edition.nom}\" modifié."
+    else
+      flash[:error] = @edition.errors.full_messages.join(',')
     end
+    redirect_to editions_path
   end
 
   # DELETE /editions/1
   # DELETE /editions/1.json
   def destroy
-    @edition.destroy
-    respond_to do |format|
-      format.html { redirect_to editions_url, notice: 'Edition was successfully destroyed.' }
-      format.json { head :no_content }
+    @edition.livres.each do |livre|
+      livre.edition_id = nil
+      livre.save
     end
+    @edition.delete
+    redirect_to editions_url, notice: 'Edition supprimée.'
+  end
+
+  def fusion
+    @editions = Edition.order(:nom)
+  end
+
+  def fusionner
+    liste = params["/editions/fusion"].select{|id,bool| bool=="1"}.map{|id,bool| id}
+    editions = Edition.find(liste)
+    id_to_keep = editions.first.id
+    editions.each do |edition|
+      if edition.id != id_to_keep
+        Livre.where(edition_id: edition.id).each do |livre|
+          livre.edition_id = id_to_keep
+          livre.save
+        end
+        edition.destroy
+      end 
+    end
+    redirect_to editions_url, notice: "Fusion effectuée."
   end
 
   private
@@ -82,6 +99,6 @@ class EditionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def edition_params
-      params[:edition]
+      params.require(:edition).permit(:nom)
     end
 end

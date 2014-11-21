@@ -82,7 +82,7 @@ class AuteursController < ApplicationController
     end
     @auteur.delete
     respond_to do |format|
-      format.html { redirect_to auteurs_url, notice: "Auteur #{@auteur.nom} détruit. Donc #{@auteur.livres.count} livres sont non assignés." }
+      format.html { redirect_to auteurs_url, notice: "Auteur #{@auteur.nom} détruit." }
       format.json { head :no_content }
     end
   end
@@ -129,7 +129,7 @@ class AuteursController < ApplicationController
       @auteur.save
     end
     File.delete(filename_image_down) if File.exist?(filename_image_down)
-    redirect_to auteurs_url
+    redirect_to auteur_url(@auteur)
   end
 
   private

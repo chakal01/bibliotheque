@@ -1,0 +1,34 @@
+:javascript
+  var lastChecked = null;
+
+  $(document).ready(function() {
+    var $chkboxes = $('input:checkbox');
+    $chkboxes.click(function(e) {
+      if(!lastChecked) {
+          lastChecked = this;
+          return;
+      }
+
+      if(e.shiftKey) {
+          var start = $chkboxes.index(this);
+          var end = $chkboxes.index(lastChecked);
+          $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).attr('checked', lastChecked.checked);
+      }
+      lastChecked = this;
+    });
+  });
+
+= bootstrap_form_for(fusion_editions_path) do |f|
+  %table.table.centree-mini
+    %tr
+      %td{colspan: 2}
+        Choisir les editions à fusionner
+    - @editions.each_with_index do |edition, index|
+      -if index % 2 == 0
+        %tr
+      %td
+        = f.check_box edition.id, label: edition.nom, id: "fusionner[#{edition.id}]"
+    %tr
+      %td{colspan: 2}
+        = f.submit "Valider", class: "btn"
+      

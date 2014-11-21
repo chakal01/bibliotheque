@@ -1,22 +1,23 @@
-%table.table-en-tete.centree{width: "100%"}
+%table.table-en-tete.centree-mini
   %tr
     %td
       = button_to "Fusionner des genres", fusion_genres_path, method: :get, class: "btn pull-right"
       %br
       %br
 
-%table.table.centree
+%table.table.centree-mini
   = bootstrap_form_for @genre do |f|
     %tr
-      %td
+      %td{colspan: 3}
         = f.text_field :nom, hide_label: :true
       %td
         %button.btn.xs
           %span.glyphicon.glyphicon-plus
-  - @genres.each do |genre|
-    %tr
-      %td= genre.nom
-      %td
-        = button_to edit_genre_path(genre), method: :get, class: "btn pull-left" do
-          .glyphicon.glyphicon-pencil
+  - @genres.each_with_index do |genre, index|
+    -if index%2==0
+      %tr   
+    %td= genre.nom
+    %td
+      = button_to edit_genre_path(genre), method: :get, class: "btn pull-left" do
+        .glyphicon.glyphicon-pencil
 %br

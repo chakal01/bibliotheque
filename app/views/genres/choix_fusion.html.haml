@@ -1,5 +1,5 @@
 = bootstrap_form_for fusionner_genres_path, url: fusionner_genres_path do |f|
-  %table.table.centree
+  %table.table.centree-mini
     %tr
       %td
         Choisir le genre à conserver
@@ -11,5 +11,5 @@
         = f.hidden_field "ids[#{genre.id}]"
     %tr
       %td
-        = f.submit "Valider"
+        = f.submit "Valider", class: "btn"
       

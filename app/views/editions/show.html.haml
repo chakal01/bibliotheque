@@ -1,6 +1,33 @@
-%p#notice= notice
+%table.table.centree-mini
+  %tr
+    %td
+      .titre.pull-left
+        = @edition.nom
+        
+      = button_to 'Listes des Editions', editions_path, method: :get, class: "btn pull-right", style: "margin-left: 20px;"
+      = button_to 'Supprimer', edition_path(@edition), method: :delete, class: "btn pull-right", style: "margin-left: 20px;", data: {confirm: 'Are you sure?' }
+      = button_to 'Modifier', edit_edition_path(@edition), method: :get, class: "btn pull-right"
 
+  %tr
+    %td
+      Livres de cette édition :
 
-= link_to 'Edit', edit_edition_path(@edition)
-\|
-= link_to 'Back', editions_path
+  - @liste_by_auteur.each do |auteur, livres|
+    %tr
+      %td
+        %a{href: auteur_path(auteur)}
+          = auteur
+        %br
+        - livres.each do |livre|
+          %a.titre{href: livre_path(livre), style: "margin-left: 40px"}
+            = livre.titre
+          %br
+        
+          
+  - if @liste_by_auteur.empty?
+    %tr
+      %td{colspan: 2}
+        Aucun livre.
+%br
+%br
+

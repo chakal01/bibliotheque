@@ -1,4 +1,4 @@
-= bootstrap_form_for @edition do |f|
+= bootstrap_form_for @edition, layout: :horizontal do |f|
   - if @edition.errors.any?
     #error_explanation
       %h2= "#{pluralize(@edition.errors.count, "error")} prohibited this edition from being saved:"
@@ -7,4 +7,4 @@
           %li= msg
 
   = f.text_field :nom
-  = f.submit 'Save'
+  = f.submit 'Save', class: "btn"

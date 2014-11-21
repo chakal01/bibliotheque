@@ -1,11 +1,12 @@
 class LivresController < ApplicationController
-  before_action :set_livre, only: [:show, :edit, :update, :destroy]
+  before_action :set_livre, only: [:show, :edit, :update, :destroy, :avatar, :save_avatar]
   before_action :set_listes, only: [:show, :edit, :update, :destroy, :create, :new]
   before_filter :init
   autocomplete :auteur, :nom, full: true
   autocomplete :edition, :nom, full: true
   autocomplete :genre, :nom, full: true
   autocomplete :emplacement, :nom, full: true
+  include ApplicationHelper
 
 
   def init
@@ -80,6 +81,25 @@ class LivresController < ApplicationController
       format.html { redirect_to livres_url, notice: 'Livre was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def avatar
+    @uris = []
+    Google::Search::Image.new(:query => "#{@livre.titre} #{@livre.auteur.nom} #{@livre.edition.nom} ").first(8).each do |image|
+      @uris.push(image.uri)
+    end
+  end
+
+  def save_avatar
+    filename_image_down = download_image_from_url(params["/livres/#{@livre.id}/avatar"]["uri"])
+    File.open(filename_image_down, 'r') do |photo|
+      @livre.update(couverture: photo)
+      uploader = ImageUploader.new
+      uploader.store!(@livre.couverture)
+      @livre.save
+    end
+    File.delete(filename_image_down) if File.exist?(filename_image_down)
+    redirect_to livre_url(@livre)
   end
 
   private

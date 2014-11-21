@@ -32,7 +32,7 @@
   
   - if @livre.couverture?
     = f.static_control :couverture do
-      = image_tag(@livre.couverture_url, class: 'couverture') if @livre.couverture?
+      = link_to image_tag(@livre.couverture_url, class: 'couverture'), avatar_livre_path(@livre)
     = f.file_field :couverture, label: "Modifier"
   - else
     = f.file_field :couverture

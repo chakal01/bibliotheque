@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :livres
+  resources :livres do
+    member do
+      get :avatar
+      post :avatar, to: :save_avatar
+    end
+  end
 
   resources :auteurs do
     get :autocomplete_auteur_nom, on: :collection

@@ -1,7 +1,10 @@
 %table.centree
   %tr
     %td
-      = image_tag((@livre.couverture.blank? ? 'no_image.png' : @livre.couverture_url), class: 'couverture')
+      - if @livre.couverture.blank?
+        = link_to image_tag('no_image.png', class: 'couverture'), avatar_livre_path(@livre)
+      - else
+        = image_tag(@livre.couverture_url, class: 'couverture')
       %br
       %br
     %td

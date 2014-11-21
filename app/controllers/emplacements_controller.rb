@@ -18,6 +18,7 @@ class EmplacementsController < ApplicationController
   # GET /emplacements.json
   def index
     @emplacements = Emplacement.all
+    @emplacement = Emplacement.new
   end
 
   # GET /emplacements/1
@@ -39,29 +40,23 @@ class EmplacementsController < ApplicationController
   def create
     @emplacement = Emplacement.new(emplacement_params)
 
-    respond_to do |format|
-      if @emplacement.save
-        format.html { redirect_to @emplacement, notice: 'Emplacement was successfully created.' }
-        format.json { render :show, status: :created, location: @emplacement }
-      else
-        format.html { render :new }
-        format.json { render json: @emplacement.errors, status: :unprocessable_entity }
-      end
+    if @emplacement.nom.present? && @emplacement.save
+      flash[:notice] = "emplacement \"#{@emplacement.nom}\" créé."
+    else
+      flash[:error] = @emplacement.errors.full_messages.join(',')
     end
+    redirect_to emplacements_path
   end
 
   # PATCH/PUT /emplacements/1
   # PATCH/PUT /emplacements/1.json
   def update
-    respond_to do |format|
-      if @emplacement.update(emplacement_params)
-        format.html { redirect_to @emplacement, notice: 'Emplacement was successfully updated.' }
-        format.json { render :show, status: :ok, location: @emplacement }
-      else
-        format.html { render :edit }
-        format.json { render json: @emplacement.errors, status: :unprocessable_entity }
-      end
+    if @emplacement.nom.present? && @emplacement.update(emplacement_params)
+      flash[:notice] = "emplacement \"#{@emplacement.nom}\" modifié."
+    else
+      flash[:error] = @emplacement.errors.full_messages.join(',')
     end
+    redirect_to emplacements_path
   end
 
   # DELETE /emplacements/1
@@ -82,6 +77,6 @@ class EmplacementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def emplacement_params
-      params[:emplacement]
+      params.require(:emplacement).permit(:nom)
     end
 end

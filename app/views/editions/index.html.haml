@@ -2,7 +2,7 @@
   %tr
     = bootstrap_form_for @edition do |f|
       %td
-        = f.text_field :nom, hide_label: :true
+        = f.text_field :nom, placeholder: "Nouvelle édition",  hide_label: :true
       %td 
         %button.btn.xs.pull-right
           %span.glyphicon.glyphicon-plus

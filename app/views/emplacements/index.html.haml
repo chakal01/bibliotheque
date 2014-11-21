@@ -1,17 +1,16 @@
-%table.table.table-bordered
-  %tr
-    %th Nom
-    %th
-    %th
-    %th
-
-  - @emplacements.each do |emplacement|
+%table.table.centree-mini
+  = bootstrap_form_for @emplacement do |f|
     %tr
+      %td
+        = f.text_field :nom, placeholder: "Nouvel emplacement", hide_label: :true
+      %td
+        %button.btn.xs
+          %span.glyphicon.glyphicon-plus
+  - @emplacements.each_with_index do |emplacement, index|
+    %tr   
       %td= emplacement.nom
-      %td= link_to 'Show', emplacement
-      %td= link_to 'Edit', edit_emplacement_path(emplacement)
-      %td= link_to 'Destroy', emplacement, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'Ajouter Emplacement', new_emplacement_path
+      %td
+        = button_to edit_emplacement_path(emplacement), method: :get, class: "btn pull-left", style: "margin-right:10px;" do
+          .glyphicon.glyphicon-pencil
+        = button_to emplacement, method: :delete, class: "btn pull-left", :data => { :confirm => 'Are you sure?' } do
+          .glyphicon.glyphicon-trash

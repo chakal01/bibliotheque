@@ -26,7 +26,7 @@
         = @livre.parution
         %br
         
-  - if @livre.achat && @livre.achat != 0    
+  - if @livre.achat && @livre.achat != "0"    
     %tr
       %td{colspan: 2}
         Acheté en 

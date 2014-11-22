@@ -56,6 +56,10 @@ class GenresController < ApplicationController
   # DELETE /genres/1
   # DELETE /genres/1.json
   def destroy
+    @genre.livres.each do |livre|
+      livre.genre_id = nil
+      livre.save
+    end
     @genre.destroy
     respond_to do |format|
       format.html { redirect_to genres_url, notice: "Genre \"#{@genre.nom}\" a bien été supprimé." }

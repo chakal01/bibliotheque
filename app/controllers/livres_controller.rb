@@ -17,7 +17,7 @@ class LivresController < ApplicationController
   # GET /livres.json
   def index
     if params[:search]
-      @livres = Livre.where("LOWER(titre) like LOWER(?)", "%#{params[:search]}%")
+      @livres = Livre.where("LOWER(titre) like LOWER(:search) or LOWER(auteurs.nom) like LOWER(:search) ", search: "%#{params[:search]}%").includes(:auteur).references(:auteur)
     else
       @livres = Livre.all
     end
@@ -50,7 +50,7 @@ class LivresController < ApplicationController
 
     respond_to do |format|
       if @livre.save
-        format.html { redirect_to livres_path, notice: 'Livre was successfully created.' }
+        format.html { redirect_to livres_path, notice: 'Livre créé.' }
         format.json { render :show, status: :created, location: @livre }
       else
         format.html { render :new }
@@ -64,7 +64,7 @@ class LivresController < ApplicationController
   def update
     respond_to do |format|
       if @livre.update(livre_params)
-        format.html { redirect_to @livre, notice: 'Livre was successfully updated.' }
+        format.html { redirect_to @livre, notice: 'Livre modifié' }
         format.json { render :show, status: :ok, location: @livre }
       else
         format.html { render :edit }
@@ -78,7 +78,7 @@ class LivresController < ApplicationController
   def destroy
     @livre.destroy
     respond_to do |format|
-      format.html { redirect_to livres_url, notice: 'Livre was successfully destroyed.' }
+      format.html { redirect_to livres_url, notice: 'Livre supprimé.' }
       format.json { head :no_content }
     end
   end

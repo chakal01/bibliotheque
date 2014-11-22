@@ -62,6 +62,10 @@ class EmplacementsController < ApplicationController
   # DELETE /emplacements/1
   # DELETE /emplacements/1.json
   def destroy
+    @emplacement.livres.each do |livre|
+      livre.emplacement_id = nil
+      livre.save
+    end
     @emplacement.destroy
     respond_to do |format|
       format.html { redirect_to emplacements_url, notice: 'Emplacement was successfully destroyed.' }

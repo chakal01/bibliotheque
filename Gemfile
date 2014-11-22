@@ -31,8 +31,7 @@ gem 'will_paginate-bootstrap'
 
 # gestion d'images de couvertures de livre
 gem 'carrierwave'
-gem 'rmagick', '~> 2.13.3'  #imagemagik issue...
-# gem install rmagick --platform=ruby -- --with-opt-lib=C:\Ruby200-x64\ImageMagick-6.9.0-Q16\lib --with-opt-include=C:\Ruby200-x64\ImageMagick-6.9.0-Q16\include --with-opt-dir=C:\Ruby200-x64\ImageMagick-6.9.0-Q16
+# gem 'rmagick', '~> 2.13.3'  #imagemagik issue...
 
 gem 'google-search', '~> 1.0.3'
 
@@ -40,7 +39,7 @@ gem 'google-search', '~> 1.0.3'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
-gem 'unicorn'
+# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

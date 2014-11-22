@@ -2,14 +2,14 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
-  username: bibliothecaire
-  password: u7tRf64bo
+  username: postgres
+  password: postgres
 
 development:
   <<: *default
-  database: bibliotheque_dev
+  database: development
 
 production:
   <<: *default
-  database: bibliotheque_prod
+  database: production
 

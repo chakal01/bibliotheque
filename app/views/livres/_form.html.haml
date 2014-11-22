@@ -38,7 +38,7 @@
     = f.file_field :couverture
     
   = f.number_field :parution
-  = f.number_field :achat
+  = f.text_field :achat
   = f.submit 'Sauver', class: "btn"
   %button.btn.pull-right{onclick: 'window.location.href="/";return false;'}
     Retour

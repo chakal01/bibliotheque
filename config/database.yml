@@ -11,5 +11,5 @@ development:
 
 production:
   <<: *default
-  database: bibliotheque_prod
+  database: bibliotheque_dev
 

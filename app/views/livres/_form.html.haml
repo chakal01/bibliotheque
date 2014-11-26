@@ -39,6 +39,8 @@
     
   = f.number_field :parution
   = f.text_field :achat
+  = f.text_area :description, rows: 6
+  = f.number_field :nb_pages, label: "Nombre de pages"
   = f.submit 'Sauver', class: "btn"
   %button.btn.pull-right{onclick: 'window.location.href="/";return false;'}
     Retour

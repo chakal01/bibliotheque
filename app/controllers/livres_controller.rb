@@ -21,8 +21,13 @@ class LivresController < ApplicationController
     else
       @livres = Livre.all
     end
-
-    @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: params[:page], per_page: 18)
+    if params[:page].present?
+      session[:livres_pages] = params[:page]
+    end
+    if @livres.count > 18
+      page = session[:livres_pages]
+    end
+    @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: page, per_page: 18)
   end
 
   # GET /livres/1
@@ -50,7 +55,7 @@ class LivresController < ApplicationController
 
     respond_to do |format|
       if @livre.save
-        format.html { redirect_to livres_path, notice: 'Livre créé.' }
+        format.html { redirect_to @livre, notice: 'Livre créé.' }
         format.json { render :show, status: :created, location: @livre }
       else
         format.html { render :new }
@@ -121,6 +126,6 @@ class LivresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def livre_params
-      params.require(:livre).permit(:titre, :auteur_nom, :edition_nom, :genre_nom, :emplacement_nom, :parution, :achat, :couverture)
+      params.require(:livre).permit(:titre, :auteur_nom, :edition_nom, :genre_nom, :emplacement_nom, :parution, :achat, :couverture, :nb_pages, :description)
     end
 end

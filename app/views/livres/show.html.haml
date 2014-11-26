@@ -24,6 +24,9 @@
             = @livre.genre.nom
         %br
         = @livre.parution
+        %br	
+        = @livre.nb_pages
+        pages
         %br
         
   - if @livre.achat && @livre.achat != "0"    
@@ -41,6 +44,14 @@
         %a{href: emplacement_path(@livre.emplacement)}
           = @livre.emplacement.nom
         %br
+  - if @livre.description
+    %br
+    %tr
+      %td{colspan: 2}
+        Description :
+        = @livre.description
+        %br
+      
   %tr
     %td{colspan: 2}
       = button_to 'Retour', livres_path, method: :get, class: "btn pull-right", style: "margin-left: 30px;"

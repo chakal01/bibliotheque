@@ -23,7 +23,13 @@ class AuteursController < ApplicationController
     else
       @auteurs = Auteur.all
     end
-    @auteurs = @auteurs.order(:nom).paginate( page: params[:page], per_page: 18)
+    if params[:page].present?
+      session[:auteurs_pages] = params[:page]
+    end
+    if @auteurs.count > 18
+      page = session[:auteurs_pages]
+    end 
+    @auteurs = @auteurs.order(:nom).paginate( page: page, per_page: 18)
   end
 
   # GET /auteurs/1

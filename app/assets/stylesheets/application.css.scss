@@ -48,3 +48,21 @@ a{
 a:hover{
 	color: black;
 }
+
+
+#infos{
+	overflow-y:scroll; 
+	height:400px;
+}
+.message-scan{
+  font-weight: bold;
+}
+.info{
+  color: black;
+}
+.success{
+  color: green;
+}
+.error{
+  color: red;
+}

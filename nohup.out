@@ -1,0 +1,44 @@
+I, [2014-11-21T21:20:33.311497 #21693]  INFO -- : Refreshing Gem list
+I, [2014-11-21T21:20:38.946501 #21693]  INFO -- : listening on addr=0.0.0.0:3040 fd=10
+I, [2014-11-21T21:20:39.012930 #21698]  INFO -- : worker=0 ready
+I, [2014-11-21T21:20:39.016452 #21693]  INFO -- : master process ready
+I, [2014-11-21T21:20:39.021164 #21701]  INFO -- : worker=1 ready
+I, [2014-11-21T21:20:39.026050 #21704]  INFO -- : worker=2 ready
+I, [2014-11-21T21:21:46.406250 #21693]  INFO -- : reaped #<Process::Status: pid 21698 exit 0> worker=0
+I, [2014-11-21T21:21:46.407017 #21693]  INFO -- : reaped #<Process::Status: pid 21701 exit 0> worker=1
+I, [2014-11-21T21:21:46.407510 #21693]  INFO -- : reaped #<Process::Status: pid 21704 exit 0> worker=2
+I, [2014-11-21T21:21:46.408177 #21693]  INFO -- : master complete
+I, [2014-11-21T21:21:51.036599 #21761]  INFO -- : Refreshing Gem list
+I, [2014-11-21T21:21:56.668826 #21761]  INFO -- : listening on addr=0.0.0.0:3040 fd=10
+I, [2014-11-21T21:21:56.735721 #21766]  INFO -- : worker=0 ready
+I, [2014-11-21T21:21:56.739162 #21761]  INFO -- : master process ready
+I, [2014-11-21T21:21:56.744296 #21771]  INFO -- : worker=1 ready
+I, [2014-11-21T21:21:56.749254 #21774]  INFO -- : worker=2 ready
+I, [2014-11-21T21:22:04.140950 #21761]  INFO -- : reaped #<Process::Status: pid 21766 exit 0> worker=0
+I, [2014-11-21T21:22:04.142113 #21761]  INFO -- : reaped #<Process::Status: pid 21771 exit 0> worker=1
+I, [2014-11-21T21:22:04.142592 #21761]  INFO -- : reaped #<Process::Status: pid 21774 exit 0> worker=2
+I, [2014-11-21T21:22:04.143179 #21761]  INFO -- : master complete
+[2014-11-22 15:35:00] INFO  WEBrick 1.3.1
+[2014-11-22 15:35:00] INFO  ruby 2.1.2 (2014-05-08) [x86_64-linux-gnu]
+[2014-11-22 15:35:00] INFO  WEBrick::HTTPServer#start: pid=23403 port=3040
+/var/lib/gems/2.1.0/gems/bootstrap_form-2.2.0/lib/bootstrap_form.rb:1:in `require': Interrupt
+	from /var/lib/gems/2.1.0/gems/bootstrap_form-2.2.0/lib/bootstrap_form.rb:1:in `<top (required)>'
+	from /var/lib/gems/2.1.0/gems/bundler-1.7.4/lib/bundler/runtime.rb:76:in `require'
+	from /var/lib/gems/2.1.0/gems/bundler-1.7.4/lib/bundler/runtime.rb:76:in `block (2 levels) in require'
+	from /var/lib/gems/2.1.0/gems/bundler-1.7.4/lib/bundler/runtime.rb:72:in `each'
+	from /var/lib/gems/2.1.0/gems/bundler-1.7.4/lib/bundler/runtime.rb:72:in `block in require'
+	from /var/lib/gems/2.1.0/gems/bundler-1.7.4/lib/bundler/runtime.rb:61:in `each'
+	from /var/lib/gems/2.1.0/gems/bundler-1.7.4/lib/bundler/runtime.rb:61:in `require'
+	from /var/lib/gems/2.1.0/gems/bundler-1.7.4/lib/bundler.rb:133:in `require'
+	from /root/simon/bibliotheque/config/application.rb:7:in `<top (required)>'
+	from /var/lib/gems/2.1.0/gems/railties-4.1.6.rc1/lib/rails/commands/commands_tasks.rb:79:in `require'
+	from /var/lib/gems/2.1.0/gems/railties-4.1.6.rc1/lib/rails/commands/commands_tasks.rb:79:in `block in server'
+	from /var/lib/gems/2.1.0/gems/railties-4.1.6.rc1/lib/rails/commands/commands_tasks.rb:76:in `tap'
+	from /var/lib/gems/2.1.0/gems/railties-4.1.6.rc1/lib/rails/commands/commands_tasks.rb:76:in `server'
+	from /var/lib/gems/2.1.0/gems/railties-4.1.6.rc1/lib/rails/commands/commands_tasks.rb:40:in `run_command!'
+	from /var/lib/gems/2.1.0/gems/railties-4.1.6.rc1/lib/rails/commands.rb:17:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+[2014-11-22 16:17:04] INFO  WEBrick 1.3.1
+[2014-11-22 16:17:04] INFO  ruby 2.1.2 (2014-05-08) [x86_64-linux-gnu]
+[2014-11-22 16:17:04] INFO  WEBrick::HTTPServer#start: pid=26096 port=3040

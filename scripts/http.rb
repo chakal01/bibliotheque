@@ -1,7 +1,7 @@
 require 'net/http'
 
 isbn = 9782264032980
-url = URI.parse("https://www.googleapis.com/books/v1/volumes?q=isbn:#{isbn}")
+url = URI.parse("https://www.googleapis.com/books/v1/volumes?country=FR&q=isbn:#{isbn}")
 puts "ISBN #{isbn}, recherche de l'ID..."
 req = Net::HTTP::Get.new(url.to_s)
 http = Net::HTTP.new(url.host, url.port)
@@ -12,7 +12,7 @@ id = hash["items"][0]["id"]
 
 puts "ID : #{id}, recherche des données..."
 
-url = URI.parse("https://www.googleapis.com/books/v1/volumes/#{id}")
+url = URI.parse("https://www.googleapis.com/books/v1/volumes/#{id}?country=FR")
 req = Net::HTTP::Get.new(url.to_s)
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = (url.scheme == "https")
@@ -25,7 +25,7 @@ editeur_str = datas["publisher"]
 nbPages = datas["pageCount"].to_i
 description = datas["description"]
 
-puts "#{titre}, #{auteur}, Editions #{editeur}, #{nbPages} pages."
+puts "#{titre_str}, #{auteur_str}, Editions #{editeur_str}, #{nbPages} pages."
 
 
 auteur = Auteur.where("LOWER(nom) like LOWER(#{auteur_str})")

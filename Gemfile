@@ -35,6 +35,10 @@ gem 'carrierwave'
 
 gem 'google-search', '~> 1.0.3'
 
+#  script de reception des scans
+# gem 'em-websocket'
+# gem 'em-websocket-client'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

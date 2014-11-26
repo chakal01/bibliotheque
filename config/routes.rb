@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'scans/index'
+
   resources :livres do
     member do
       get :avatar

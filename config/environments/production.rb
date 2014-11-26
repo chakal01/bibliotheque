@@ -76,4 +76,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.ipadress = "0.0.0.0"
+  config.port = 3041
+
 end

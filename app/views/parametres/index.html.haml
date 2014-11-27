@@ -1,0 +1,42 @@
+.centree
+  %h3
+    Connexion
+  - if user_signed_in?
+    Vous êtes déjà connecté.
+    %br
+    %br
+    = bootstrap_form_for(@user, url: destroy_user_session_path(@user), method: :delete, layout: :horizontal) do |f|
+      = f.submit "Se déconnecter", class: "btn"
+  - else
+    %p
+      Veuillez vous connectez pour pouvoir accéder aux modifications.
+    = bootstrap_form_for(@user, url: user_session_path(@user), layout: :horizontal) do |f|
+      = f.text_field :username, autofocus: true, label: "Pseudo", control_col: "col-sm-3"
+      = f.password_field :password, autocomplete: "off", label: "Mot de Passe", control_col: "col-sm-3"
+      = f.check_box :remember_me, label: "Se souvenir de moi"
+      %br
+      = f.submit "Se connecter", class: "btn"
+  %br
+    
+    -#= bootstrap_form_for(@user, url: new_user_registration_path(@user), method: :get) do |f|
+    -#  = f.submit "Créer un compte", class: "btn"
+
+  %h3
+    Paramètres
+  = bootstrap_form_for "parametres", layout: :horizontal do |f|
+    = f.form_group :onglet, label: { text: "Onglets" }, label_col: "col-sm-4", control_col: "col-sm-2" do
+      = f.check_box :onglet_genre, checked: session[:onglet_genre], label: "Genre"
+      = f.check_box :onglet_edition, checked: session[:onglet_edition], label: "Editions"
+      = f.check_box :onglet_emplacement, checked: session[:onglet_emplacement], label: "Emplacements"
+      = f.check_box :onglet_scan, checked: session[:onglet_scan], label: "Scans"
+
+    = f.form_group :onglet_genre, label: { text: "Genre" }, label_col: "col-sm-4", control_col: "col-sm-2" do
+      = f.radio_button :onglet_genre, false, inline: true, label: "Oui"
+      = f.radio_button :onglet_genre, true, inline: true, label: "Non"
+
+    %br
+    %Br
+    = render 'radio'
+
+    = f.number_field :nb_pages, label_col: "col-sm-4", control_col: "col-sm-2", value: session[:bookPerPage], min: 8, max: 50, label: "Nombre de livres par page"
+    = f.submit "Valider", class: "btn"

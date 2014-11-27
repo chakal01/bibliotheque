@@ -29,15 +29,18 @@ gem 'rails4-autocomplete'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 
+# mode admin
+gem 'devise'
+
 # gestion d'images de couvertures de livre
 gem 'carrierwave'
-gem 'rmagick', '~> 2.13.3'  #imagemagik issue...
+# gem 'rmagick', '~> 2.13.3'  #imagemagik issue...
 
 gem 'google-search', '~> 1.0.3'
 
 #  script de reception des scans
-gem 'em-websocket'
-gem 'em-websocket-client'
+# gem 'em-websocket'
+# gem 'em-websocket-client'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

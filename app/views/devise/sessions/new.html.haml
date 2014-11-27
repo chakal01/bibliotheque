@@ -1,0 +1,14 @@
+.centree
+  %h2
+    Connexion
+  = bootstrap_form_for(resource, as: resource_name, url: session_path(resource_name), layout: :horizontal) do |f|
+    = f.text_field :username, autofocus: true, label: "Pseudo", control_col: "col-sm-3"
+    = f.password_field :password, autocomplete: "off", control_col: "col-sm-3"
+
+    - if devise_mapping.rememberable?
+      = f.check_box :remember_me, label: "Se souvenir de moi"
+
+    %br
+    = f.submit "Connexion", class: "btn"
+  %br
+  = render "devise/shared/links"

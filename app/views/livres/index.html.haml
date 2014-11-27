@@ -8,7 +8,8 @@
           %button.btn.xs{type: "submit"}
             %span.glyphicon.glyphicon-search
       %td
-        = button_to 'Ajouter un Livre', new_livre_path, method: :get, class: "btn pull-right"
+        - if user_signed_in?
+          = button_to 'Ajouter un Livre', new_livre_path, method: :get, class: "btn pull-right"
   %br
   %br
 

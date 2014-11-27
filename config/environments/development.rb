@@ -37,4 +37,5 @@ Rails.application.configure do
   config.ipadress = "0.0.0.0"
   config.port = 3041
   
+  config.action_mailer.default_url_options = { host: '0.0.0.0', port: 3000 }
 end

@@ -5,8 +5,9 @@
         = @edition.nom
         
       = button_to 'Listes des Editions', editions_path, method: :get, class: "btn pull-right", style: "margin-left: 20px;"
-      = button_to 'Supprimer', edition_path(@edition), method: :delete, class: "btn pull-right", style: "margin-left: 20px;", data: {confirm: 'Are you sure?' }
-      = button_to 'Modifier', edit_edition_path(@edition), method: :get, class: "btn pull-right"
+      - if user_signed_in?
+        = button_to 'Supprimer', edition_path(@edition), method: :delete, class: "btn pull-right", style: "margin-left: 20px;", data: {confirm: 'Are you sure?' }
+        = button_to 'Modifier', edit_edition_path(@edition), method: :get, class: "btn pull-right"
 
   %tr
     %td
@@ -15,7 +16,7 @@
   - @liste_by_auteur.each do |auteur, livres|
     %tr
       %td
-        %a{href: auteur_path(auteur)}
+        %a{href: auteur_path(livres[0].auteur_id)}
           = auteur
         %br
         - livres.each do |livre|

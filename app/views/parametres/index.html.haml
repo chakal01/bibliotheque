@@ -24,19 +24,23 @@
   %h3
     Paramètres
   = bootstrap_form_for "parametres", layout: :horizontal do |f|
-    = f.form_group :onglet, label: { text: "Onglets" }, label_col: "col-sm-4", control_col: "col-sm-2" do
-      = f.check_box :onglet_genre, checked: session[:onglet_genre], label: "Genre"
-      = f.check_box :onglet_edition, checked: session[:onglet_edition], label: "Editions"
-      = f.check_box :onglet_emplacement, checked: session[:onglet_emplacement], label: "Emplacements"
-      = f.check_box :onglet_scan, checked: session[:onglet_scan], label: "Scans"
+    
 
-    = f.form_group :onglet_genre, label: { text: "Genre" }, label_col: "col-sm-4", control_col: "col-sm-2" do
-      = f.radio_button :onglet_genre, false, inline: true, label: "Oui"
-      = f.radio_button :onglet_genre, true, inline: true, label: "Non"
+    
+    %label.control-label.col-sm-4{for: "parametres_onglet"}
+      Onglets
 
+    %div.btn-group{"data-toggle" =>"buttons"}
+      - [["onglet_livres", "Livres"], ["onglet_auteurs", "Auteurs"], ["onglet_genres", "Genres"], ["onglet_editions", "Editions"], ["onglet_emplacements", "Emplacements"], ["onglet_scans", "Scans"]].each do |key, value|
+        %label.btn.btn-primary{class: (cookies["#{key}"]=="true")  ? 'active' : ''}
+          %input{ name: "parametres[#{key}]", type: "hidden", value: "0"}
+          %input{ type: "checkbox", id: "parametres_onglet_livres", name: "parametres[#{key}]", autocomplete: "off", checked: cookies["#{key}"]=="true"  }
+          = value
     %br
-    %Br
-    = render 'radio'
+    %br
 
-    = f.number_field :nb_pages, label_col: "col-sm-4", control_col: "col-sm-2", value: session[:bookPerPage], min: 8, max: 50, label: "Nombre de livres par page"
+    = f.number_field :nb_livre_page, label_col: "col-sm-4", control_col: "col-sm-2", value: cookies[:bookPerPage], min: 8, max: 50, label: "Nombre de livres par page"
+    = f.number_field :nb_auteur_page, label_col: "col-sm-4", control_col: "col-sm-2", value: cookies[:authorPerPage], min: 8, max: 50, label: "Nombre d'auteurs par page"
     = f.submit "Valider", class: "btn"
+    %br
+    %br

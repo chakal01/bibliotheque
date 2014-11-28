@@ -1,5 +1,6 @@
 class EmplacementsController < ApplicationController
   before_action :set_emplacement, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new]
   before_filter :init
 
   def init

@@ -18,24 +18,31 @@
 
       %div.pull-right.collapse.navbar-collapse#bs-example-navbar-collapse-1
         %ul.nav.navbar-nav
-          %li
-            %a{href: root_path}
-              Livres
-          %li
-            %a{href: auteurs_path}
-              Auteurs
-          %li
-            %a{href: genres_path}
-              Genres
-          %li
-            %a{href: editions_path}
-              Editions
-          %li
-            %a{href: emplacements_path}
-              Emplacements
-          %li
-            %a{href: scans_path}
-              Scans
+          -#=cookies[:onglet_livres]
+          - if cookies[:onglet_livres]=="true"
+            %li
+              %a{href: root_path}
+                Livres
+          - if cookies[:onglet_auteurs]=="true"
+            %li
+              %a{href: auteurs_path}
+                Auteurs
+          - if cookies[:onglet_genres]=="true"
+            %li
+              %a{href: genres_path}
+                Genres
+          - if cookies[:onglet_editions]=="true"
+            %li
+              %a{href: editions_path}
+                Editions
+          - if cookies[:onglet_emplacements]=="true"
+            %li
+              %a{href: emplacements_path}
+                Emplacements
+          - if cookies[:onglet_scans]=="true"
+            %li
+              %a{href: scans_path}
+                Scans
           %li
             %a{href: parametres_path}
               %span.glyphicon.glyphicon-cog

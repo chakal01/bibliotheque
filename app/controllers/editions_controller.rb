@@ -1,5 +1,6 @@
 class EditionsController < ApplicationController
   before_action :set_edition, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :fusion, :fusionner]
   before_filter :init
 
   def init

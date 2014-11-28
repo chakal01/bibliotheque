@@ -1,5 +1,6 @@
 class EmplacementsController < ApplicationController
   before_action :set_emplacement, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new]
   before_filter :init
 
   def init
@@ -24,6 +25,7 @@ class EmplacementsController < ApplicationController
   # GET /emplacements/1
   # GET /emplacements/1.json
   def show
+    @liste_by_auteur = @emplacement.livres.includes(:auteur).group_by{|livre| livre.auteur.nom}
   end
 
   # GET /emplacements/new

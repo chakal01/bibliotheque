@@ -1,0 +1,15 @@
+.centree
+  %h2
+    Créer un compte
+
+  = bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name), layout: :horizontal) do |f|
+    = devise_error_messages!
+    = f.text_field :username, autofocus: true
+    - if @validatable
+      %em
+        (= @minimum_password_length characters minimum)
+    %br
+    = f.password_field :password, autocomplete: "off"
+    = f.password_field :password_confirmation, autocomplete: "off"
+    = f.submit "Valider", class: "btn"
+  -#= render "devise/shared/links"

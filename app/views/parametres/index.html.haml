@@ -1,0 +1,61 @@
+.centree
+  %h3
+    Connexion
+  - if user_signed_in?
+    Vous êtes déjà connecté.
+    %br
+    %br
+    = bootstrap_form_for(@user, url: destroy_user_session_path(@user), method: :delete, layout: :horizontal) do |f|
+      = f.submit "Se déconnecter", class: "btn"
+  - else
+    %p
+      Veuillez vous connectez pour pouvoir accéder aux modifications.
+    = bootstrap_form_for(@user, url: user_session_path(@user), layout: :horizontal) do |f|
+      = f.text_field :username, autofocus: true, label: "Pseudo", control_col: "col-sm-3"
+      = f.password_field :password, autocomplete: "off", label: "Mot de Passe", control_col: "col-sm-3"
+      = f.check_box :remember_me, label: "Se souvenir de moi"
+      %br
+      = f.submit "Se connecter", class: "btn"
+  %br
+    
+    -#= bootstrap_form_for(@user, url: new_user_registration_path(@user), method: :get) do |f|
+    -#  = f.submit "Créer un compte", class: "btn"
+
+  %h3
+    Paramètres
+  = bootstrap_form_for "parametres", layout: :horizontal do |f|
+    
+
+    
+    %label.control-label.col-sm-4{for: "parametres_onglet"}
+      Onglets
+
+    %div.btn-group{"data-toggle" =>"buttons"}
+      - [["onglet_livres", "Livres"], ["onglet_auteurs", "Auteurs"], ["onglet_genres", "Genres"], ["onglet_editions", "Editions"], ["onglet_emplacements", "Emplacements"], ["onglet_scans", "Scans"]].each do |key, value|
+        %label.btn.btn-primary{class: (cookies["#{key}"]=="true")  ? 'active' : ''}
+          %input{ name: "parametres[#{key}]", type: "hidden", value: "0"}
+          %input{ type: "checkbox", id: "parametres_onglet_livres", name: "parametres[#{key}]", autocomplete: "off", checked: cookies["#{key}"]=="true"  }
+          = value
+    %br
+    %br
+
+    = f.number_field :nb_livre_page, label_col: "col-sm-4", control_col: "col-sm-2", value: cookies[:bookPerPage], min: 8, max: 50, label: "Nombre de livres par page"
+    = f.number_field :nb_auteur_page, label_col: "col-sm-4", control_col: "col-sm-2", value: cookies[:authorPerPage], min: 8, max: 50, label: "Nombre d'auteurs par page"
+    = f.submit "Valider", class: "btn"
+    %br
+    %br
+
+    %h3
+      Statistiques
+    = bootstrap_form_for "parametres", layout: :horizontal do |f|
+      = f.static_control label: "Nombre de livres :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Livre.count
+      = f.static_control label: "Nombre d'auteurs :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Auteur.count
+      = f.static_control label: "Nombre de genres :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Genre.count
+      = f.static_control label: "Nombre d'éditions :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Edition.count
+
+    %br
+    %br

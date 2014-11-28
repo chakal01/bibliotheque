@@ -1,5 +1,6 @@
 class AuteursController < ApplicationController
   before_action :set_auteur, only: [:show, :edit, :update, :destroy, :avatar, :save_avatar]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :avatar, :save_avatar, :new, :fusion, :choix_fusion, :fusionner]
   before_filter :init
   include ApplicationHelper
 
@@ -26,10 +27,10 @@ class AuteursController < ApplicationController
     if params[:page].present?
       session[:auteurs_pages] = params[:page]
     end
-    if @auteurs.count > 18
+    if @auteurs.count > cookies[:authorPerPage].to_i
       page = session[:auteurs_pages]
     end 
-    @auteurs = @auteurs.order(:nom).paginate( page: page, per_page: 18)
+    @auteurs = @auteurs.order(:nom).paginate( page: page, per_page: cookies[:authorPerPage].to_i)
   end
 
   # GET /auteurs/1

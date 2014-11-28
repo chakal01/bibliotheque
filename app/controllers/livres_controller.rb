@@ -1,6 +1,7 @@
 class LivresController < ApplicationController
   before_action :set_livre, only: [:show, :edit, :update, :destroy, :avatar, :save_avatar]
   before_action :set_listes, only: [:show, :edit, :update, :destroy, :create, :new]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :avatar, :save_avatar, :new]
   before_filter :init
   autocomplete :auteur, :nom, full: true
   autocomplete :edition, :nom, full: true
@@ -16,18 +17,22 @@ class LivresController < ApplicationController
   # GET /livres
   # GET /livres.json
   def index
-    if params[:search]
-      @livres = Livre.where("LOWER(titre) like LOWER(:search) or LOWER(auteurs.nom) like LOWER(:search) ", search: "%#{params[:search]}%").includes(:auteur).references(:auteur)
-    else
-      @livres = Livre.all
-    end
+
+    # if params[:search]
+    #   @livres = Livre.where("LOWER(titre) like LOWER(:search) or LOWER(auteurs.nom) like LOWER(:search) ", search: "%#{params[:search]}%").includes(:auteur).references(:auteur)
+    # else
+    #   @livres = Livre.all
+    # end
+    @livres = Livre.search(params[:search]).order(:titre)
     if params[:page].present?
       session[:livres_pages] = params[:page]
     end
-    if @livres.count > 18
+    if @livres.count > cookies[:bookPerPage].to_i
       page = session[:livres_pages]
     end
-    @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: page, per_page: 18)
+    @livres = @livres.paginate(page: page, per_page: cookies[:bookPerPage].to_i)
+
+    # @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: page, per_page: cookies[:bookPerPage].to_i)
   end
 
   # GET /livres/1

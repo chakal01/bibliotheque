@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126171049) do
+ActiveRecord::Schema.define(version: 20141127134254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,10 +51,10 @@ ActiveRecord::Schema.define(version: 20141126171049) do
     t.integer  "genre_id"
     t.integer  "emplacement_id"
     t.integer  "parution"
-    t.text     "achat"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "couverture"
+    t.text     "achat"
     t.integer  "nb_pages"
     t.text     "description"
   end
@@ -63,5 +63,15 @@ ActiveRecord::Schema.define(version: 20141126171049) do
   add_index "livres", ["edition_id"], name: "index_livres_on_edition_id", using: :btree
   add_index "livres", ["emplacement_id"], name: "index_livres_on_emplacement_id", using: :btree
   add_index "livres", ["genre_id"], name: "index_livres_on_genre_id", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "username",            default: "", null: false
+    t.string   "encrypted_password",  default: "", null: false
+    t.datetime "remember_created_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end

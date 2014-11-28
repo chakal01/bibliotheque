@@ -1,5 +1,6 @@
 class EditionsController < ApplicationController
   before_action :set_edition, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update, :destroy, :new, :fusion, :fusionner]
   before_filter :init
 
   def init
@@ -25,7 +26,6 @@ class EditionsController < ApplicationController
   # GET /editions/1.json
   def show
     @liste_by_auteur = @edition.livres.includes(:auteur).group_by{|livre| livre.auteur.nom}
-    puts "#{@liste_by_auteur}"
   end
 
   # GET /editions/new

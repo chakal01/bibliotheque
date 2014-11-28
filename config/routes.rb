@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'parametres', to: "parametres#index"
+  post 'parametres', to: "parametres#save"
+
+  devise_for :users #, controllers: { sessions: "users/sessions" }
   get 'scans', to: "scans#index"
 
   resources :livres do

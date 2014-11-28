@@ -44,3 +44,18 @@
     = f.submit "Valider", class: "btn"
     %br
     %br
+
+    %h3
+      Statistiques
+    = bootstrap_form_for "parametres", layout: :horizontal do |f|
+      = f.static_control label: "Nombre de livres :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Livre.count
+      = f.static_control label: "Nombre d'auteurs :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Auteur.count
+      = f.static_control label: "Nombre de genres :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Genre.count
+      = f.static_control label: "Nombre d'éditions :", label_col: "col-sm-4", control_col: "col-sm-2" do
+        =Edition.count
+
+    %br
+    %br

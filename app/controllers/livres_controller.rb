@@ -17,18 +17,22 @@ class LivresController < ApplicationController
   # GET /livres
   # GET /livres.json
   def index
-    if params[:search]
-      @livres = Livre.where("LOWER(titre) like LOWER(:search) or LOWER(auteurs.nom) like LOWER(:search) ", search: "%#{params[:search]}%").includes(:auteur).references(:auteur)
-    else
-      @livres = Livre.all
-    end
+
+    # if params[:search]
+    #   @livres = Livre.where("LOWER(titre) like LOWER(:search) or LOWER(auteurs.nom) like LOWER(:search) ", search: "%#{params[:search]}%").includes(:auteur).references(:auteur)
+    # else
+    #   @livres = Livre.all
+    # end
+    @livres = Livre.search(params[:search]).order(:titre)
     if params[:page].present?
       session[:livres_pages] = params[:page]
     end
     if @livres.count > cookies[:bookPerPage].to_i
       page = session[:livres_pages]
     end
-    @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: page, per_page: cookies[:bookPerPage].to_i)
+    @livres = @livres.paginate(page: page, per_page: cookies[:bookPerPage].to_i)
+
+    # @livres = @livres.order(:titre).includes(:auteur, :edition, :genre, :emplacement).paginate( page: page, per_page: cookies[:bookPerPage].to_i)
   end
 
   # GET /livres/1

@@ -26,7 +26,6 @@ class EditionsController < ApplicationController
   # GET /editions/1.json
   def show
     @liste_by_auteur = @edition.livres.includes(:auteur).group_by{|livre| livre.auteur.nom}
-    puts "#{@liste_by_auteur}"
   end
 
   # GET /editions/new

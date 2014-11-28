@@ -6,6 +6,16 @@ class Livre < ActiveRecord::Base
   validates :titre, presence: true
   mount_uploader :couverture, ImageUploader
 
+  def self.search(search)
+  if search
+    where("LOWER(titre) like LOWER(:search) or LOWER(auteurs.nom) like LOWER(:search) ", search: "%#{search}%").includes(:auteur).references(:auteur)
+    # where('name LIKE ?', "%#{search}%")
+  else
+    # scoped
+    all
+  end
+end
+
   def auteur_nom
     auteur.nom if auteur
   end

@@ -1,11 +1,6 @@
 :javascript
   $(function() {
-    /*$("#livres").live("click", function() {
-      $.getScript(this.href);
-      return false;
-    });*/
     $("#search").keyup(function() {
-      console.log("lol")
       $.get($("#search").attr("action"), $("#search").serialize(), null, "script");
       return false;
     });

@@ -9,19 +9,19 @@
         var socket = new WebSocket(host);
 
             socket.onopen = function(){
-               console.log("log in")
+               //console.log("log in")
                message({class: "info", content: "Connecté !"});
             }
 
             socket.onmessage = function(msg){
-               console.log("message")
+              //console.log("message")
                hash = JSON.parse(msg.data)
 
                message(hash);
             }
 
             socket.onclose = function(){
-               console.log("log out :(")
+               //console.log("log out :(")
                message({class: "error", content: "Connexion fermé !"});
             }     
 

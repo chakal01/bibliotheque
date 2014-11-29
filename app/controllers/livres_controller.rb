@@ -23,7 +23,7 @@ class LivresController < ApplicationController
     # else
     #   @livres = Livre.all
     # end
-    @livres = Livre.search(params[:search]).order(:titre)
+    @livres = Livre.search(params[:search]).order(:titre).includes(:auteur, :edition, :genre, :emplacement)
     if params[:page].present?
       session[:livres_pages] = params[:page]
     end

@@ -3,7 +3,7 @@
     %td
       - if @livre.couverture.blank?
         - if user_signed_in?
-          = link_to image_tag('no_image.png', class: 'couverture'), avatar_auteur_path(@livre)
+          = link_to image_tag('no_image.png', class: 'couverture'), avatar_livre_path(@livre)
         - else
           = image_tag('no_image.png', class: 'couverture')
       - else
@@ -33,9 +33,10 @@
           pages
         %br
         
-  - if @livre.achat && @livre.achat != "0"    
-    %tr
-      %td{colspan: 2}
+      
+  %tr
+    %td{colspan: 2}
+      - if @livre.achat && @livre.achat != "" && @livre.achat != "0"
         Acheté en 
         = @livre.achat
       %br

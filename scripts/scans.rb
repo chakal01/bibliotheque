@@ -84,7 +84,7 @@ EventMachine.run do
     end
 
     ws.onclose do 
-      @channel.push({class: "info", content: "#{sid} se casse !"}.to_json)
+      # @channel.push({class: "info", content: "#{sid} se casse !"}.to_json)
       @channel.unsubscribe(sid)
     end
   end

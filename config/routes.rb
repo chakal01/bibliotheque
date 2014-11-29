@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get :avatar
       post :avatar, to: :save_avatar
     end
+      get ':isbn/get_datas', on: :collection, to: 'livres#get_datas'
   end
 
   resources :auteurs do

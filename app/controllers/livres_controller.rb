@@ -1,3 +1,5 @@
+require 'net/http'
+
 class LivresController < ApplicationController
   before_action :set_livre, only: [:show, :edit, :update, :destroy, :avatar, :save_avatar]
   before_action :set_listes, only: [:show, :edit, :update, :destroy, :create, :new]
@@ -12,6 +14,40 @@ class LivresController < ApplicationController
 
   def init
     @title = "Mes Livres"
+  end
+
+  def get_datas
+    isbn = params[:isbn]
+
+    url = URI.parse("https://www.googleapis.com/books/v1/volumes?country=FR&q=isbn:#{isbn}")
+    req = Net::HTTP::Get.new(url.to_s)
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = (url.scheme == "https")
+    res = http.request(req)
+    hash = JSON.parse(res.body)
+    if hash["totalItems"] > 0
+      id = hash["items"][0]["id"]
+
+      url = URI.parse("https://www.googleapis.com/books/v1/volumes/#{id}?country=FR")
+      req = Net::HTTP::Get.new(url.to_s)
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = (url.scheme == "https")
+      res = http.request(req)
+      hash = JSON.parse(res.body)
+      datas = hash["volumeInfo"]
+      titre_str = datas["title"]
+      auteur_str = datas["authors"][0]
+      edition_str = datas["publisher"]
+      nbPages = datas["pageCount"].to_i
+      description = datas["description"]
+      parution = datas["publishedDate"][0..3].to_i
+      datas = {found: true, titre: titre_str, auteur: auteur_str, edition: edition_str, 
+      parution: parution, nb_pages: nbPages, description: description}
+    else
+      datas = {found: false}
+    end
+
+    render json:  datas
   end
 
   # GET /livres
@@ -131,6 +167,6 @@ class LivresController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def livre_params
-      params.require(:livre).permit(:titre, :auteur_nom, :edition_nom, :genre_nom, :emplacement_nom, :parution, :achat, :couverture, :nb_pages, :description)
+      params.require(:livre).permit(:isbn, :titre, :auteur_nom, :edition_nom, :genre_nom, :emplacement_nom, :parution, :achat, :couverture, :nb_pages, :description)
     end
 end

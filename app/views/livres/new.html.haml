@@ -1,2 +1,51 @@
+:javascript
+  $(document).ready(function(){
+    $("#search_isbn").click(function(){
+      var isbn = $("#livre_isbn").val();
+      if (isbn != ""){
+        $.ajax({
+          url: isbn+"/get_datas",
+          beforeSend: function(){
+            console.log("avant d'envoyer")
+          }
+
+        })
+          .done(function( data ) {
+            console.log( "Sample of data: ", data );
+            if (data["found"]){
+              $("#livre_titre").val(data["titre"]);
+              $("#livre_auteur_nom").val(data["auteur"]);
+              $("#livre_edition_nom").val(data["edition"]);
+              $("#livre_parution").val(data["parution"]);
+              $("#livre_description").val(data["description"]);
+              $("#livre_nb_pages").val(data["nb_pages"]);
+            }
+            else{
+              $('#livre_isbn').popover({content: "ISBN non trouvé."});
+              $('#livre_isbn').popover('show');
+            }
+          });
+      }else{
+        console.log("nothin !!!")
+        $('#livre_isbn').popover({content: "Veuillez rentrer un ISBN."});
+        $('#livre_isbn').popover('show');
+      }
+      return false;
+    });
+    
+    $('#label_isbn').tooltip();
+
+  });
+
+
 .centree
-	= render 'form'
+  %form.form-horizontal
+    %div.form-group
+      %label.control-label.col-sm-2#label_isbn{for: "livre_isbn", data: {toggle: "tooltip", placement: "right",  trigger: "click", "original-title" => "Tooltip on right", title: "LOL !!!"}}
+        ISBN
+      %div.col-sm-9
+        %input.form-control{id: "livre_isbn", name: "livre[isbn]", type: "text", data: {toggle: "popover", placement: "bottom", trigger: "focus"}}
+      %div.col-sm-1
+        %button.btn.xs#search_isbn
+          %span.glyphicon.glyphicon-search
+  = render 'form'

@@ -36,7 +36,7 @@ class LivresController < ApplicationController
       hash = JSON.parse(res.body)
       datas = hash["volumeInfo"]
       titre_str = datas["title"]
-      auteur_str = datas["authors"][0]
+      auteur_str = datas["authors"][0] if datas["authors"].present?
       edition_str = datas["publisher"]
       nbPages = datas["pageCount"].to_i
       description = datas["description"]

@@ -5,7 +5,6 @@ class ParametresController < ApplicationController
   end
 
   def save
-  	puts params
     cookies.permanent[:onglet_livres] = (params[:parametres][:onglet_livres]=="on")
     cookies.permanent[:onglet_auteurs] = (params[:parametres][:onglet_auteurs]=="on")
     cookies.permanent[:onglet_genres] = (params[:parametres][:onglet_genres]=="on")
